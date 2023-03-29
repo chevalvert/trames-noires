@@ -1,8 +1,13 @@
 .toolbar {
+  @include invisible-scroll;
+
   display: flex;
   gap: var(--gutter);
   justify-content: space-between;
-  pointer-events: none;
+
+  & > * {
+    flex: none;
+  }
 
   .button {
     pointer-events: auto;

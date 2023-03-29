@@ -21,6 +21,7 @@ import IconFillMode from 'iconoir/icons/timer.svg?raw'
 export default class Toolbar extends Component {
   beforeRender () {
     this.handleUndo = this.handleUndo.bind(this)
+    this.handleClear = this.handleClear.bind(this)
 
     this.state = {
       hasNoLines: d(Store.lines, lines => !lines.length)
@@ -84,12 +85,12 @@ export default class Toolbar extends Component {
           <Button
             icon={IconWireframeOff}
             store-hidden={not(Store.wireframe)}
-            event-click={() => Store.wireframe.set(!Store.wireframe.current)}
+            event-click={() => Store.wireframe.set(false)}
           />
           <Button
             icon={IconWireframeOn}
             store-hidden={Store.wireframe}
-            event-click={() => Store.wireframe.set(!Store.wireframe.current)}
+            event-click={() => Store.wireframe.set(true)}
           />
 
           <fieldset class='group'>
@@ -101,9 +102,7 @@ export default class Toolbar extends Component {
             <Button
               icon={IconClear}
               store-disabled={d(Store.lines, lines => !lines.length)}
-              event-click={() => {
-                if (window.confirm('Tout effacer ?')) Store.lines.set([])
-              }}
+              event-click={this.handleClear}
             />
           </fieldset>
         </fieldset>
@@ -113,5 +112,12 @@ export default class Toolbar extends Component {
 
   handleUndo () {
     Store.lines.update(lines => lines.slice(0, lines.length - 1), true)
+    if (!Store.lines.current.length) Store.drawMode.set('draw')
+  }
+
+  handleClear () {
+    if (!window.confirm('Tout effacer ?')) return
+    Store.lines.set([])
+    Store.drawMode.set('draw')
   }
 }

@@ -15,7 +15,7 @@ export default class App extends Component {
   template (props) {
     return (
       <main class='app'>
-        <Splashscreen />
+        <Splashscreen ref={this.ref('splashscreen')} />
         <Toolbar />
         <div class='app__main'>
           <Drawer store-disabled={d(Store.drawMode, m => m !== 'draw')} />
@@ -25,5 +25,11 @@ export default class App extends Component {
         <Timeline />
       </main>
     )
+  }
+
+  afterRender () {
+    document.addEventListener('click', () => {
+      if (this.refs.splashscreen.mounted) this.refs.splashscreen.destroy()
+    }, { once: true })
   }
 }

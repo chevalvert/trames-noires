@@ -44,7 +44,7 @@ const Store = {
   // Controllers
   raf: {
     fps: r(60),
-    maxDuration: r(60 * 2),
+    maxDuration: r(60 * 5),
     isRunning: w(false),
     frameCount: w(0)
   }

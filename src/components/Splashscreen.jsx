@@ -1,6 +1,7 @@
 import './Splashscreen.scss'
 import { Component } from '/utils/jsx'
 
+import Button from '/components/Button'
 import Nut from '/favicons/icon.svg?raw'
 
 export default class Splashscreen extends Component {
@@ -13,9 +14,7 @@ export default class Splashscreen extends Component {
       <section class='splashscreen' event-click={this.handleClick}>
         <div class='splashscreen__content'>
           <div class='splashscreen__icon' innerHTML={Nut} />
-          <div class='splashscreen__text'>
-            cliquer pour commencer
-          </div>
+          <Button label='Nouveau dessin' />
         </div>
       </section>
     )
@@ -23,6 +22,6 @@ export default class Splashscreen extends Component {
 
   async handleClick () {
     await document.body.requestFullscreen()
-    this.base.remove()
+    this.destroy()
   }
 }
