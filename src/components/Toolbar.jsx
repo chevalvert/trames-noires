@@ -16,7 +16,7 @@ import IconRepeat from 'iconoir/icons/keyframes.svg?raw'
 import IconUndo from 'iconoir/icons/undo.svg?raw'
 import IconWireframeOn from 'iconoir/icons/eye-off.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-empty.svg?raw'
-import IconFillMode from 'iconoir/icons/bounce-right.svg?raw'
+import IconFillMode from 'iconoir/icons/timer.svg?raw'
 
 export default class Toolbar extends Component {
   beforeRender () {
