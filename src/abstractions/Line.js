@@ -28,7 +28,7 @@ export default class Line {
     style = this.style
   } = {}) {
     if (this.isEmpty) return
-    if (frame < this.firstFrame) return
+    if (frame < this.firstFrame && fillMode !== 'AB') return
 
     context.save()
     context.beginPath()
