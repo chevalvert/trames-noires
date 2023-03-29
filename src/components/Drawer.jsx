@@ -56,7 +56,7 @@ export default class Drawer extends Component {
     const line = this.state.line.get()
     if (!line) return
 
-    line.render(this.refs.canvas.context, Store.raf.frameCount.get())
+    line.render(this.refs.canvas.context, Store.raf.frameCount.get(), { fillMode: 'AB' })
   }
 
   handlePenDown (e) {
