@@ -36,7 +36,7 @@ fieldset {
     }
 
     .button + input,
-    .button + .button {
+    .button:not([hidden]) + .button {
       border-left-style: dashed;
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;

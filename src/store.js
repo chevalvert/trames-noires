@@ -1,28 +1,38 @@
 import { r, w } from '/utils/state'
 
 const Store = {
-  // Constants
+  AA_AB_FILL_MODE_LENGTH: r(3),
+
   LINE_WIDTHS: r([
-    { label: 'medium', value: 10 },
-    { label: 'large', value: 20 },
-    { label: 'small', value: 5 }
+    { value: 10, name: 'medium' },
+    { value: 20, name: 'large' },
+    { value: 5, name: 'small' }
   ]),
+
   COLORS: r([
     // Thanks Pico8 !
-    { label: 'white', value: '#FFF1E8' },
-    { label: 'red', value: '#FF004D' },
-    { label: 'orange', value: '#FFA300' },
-    { label: 'yellow', value: '#FFEC27' },
-    { label: 'green', value: '#00E436' },
-    { label: 'blue', value: '#29ADFF' },
-    { label: 'lavender', value: '#83769C' },
-    { label: 'pink', value: '#FF77A8' },
-    { label: 'light-peach', value: '#FFCCAA' }
+    { value: '#FFF1E8' },
+    { value: '#FF004D' },
+    { value: '#FFA300' },
+    { value: '#FFEC27' },
+    { value: '#00E436' },
+    { value: '#29ADFF' },
+    { value: '#83769C' },
+    { value: '#FF77A8' },
+    { value: '#FFCCAA' }
+  ]),
+
+  FILL_MODES: r([
+    { value: 'AA→AB' },
+    { value: 'AA→BB' },
+    { value: 'AA→AB→BB' },
+    { value: 'AB' }
   ]),
 
   // App state
-  mode: w('draw'), // draw|paste
+  drawMode: w('draw'), // draw|paste
   wireframe: w(true),
+  fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
   style: w({
     lineWidth: 10,
     strokeStyle: 'white',
@@ -34,7 +44,7 @@ const Store = {
   // Controllers
   raf: {
     fps: r(60),
-    maxDuration: r(60 * 5),
+    maxDuration: r(60 * 2),
     isRunning: w(false),
     frameCount: w(0)
   }

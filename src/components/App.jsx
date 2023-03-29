@@ -18,8 +18,8 @@ export default class App extends Component {
         <Splashscreen />
         <Toolbar />
         <div class='app__main'>
-          <Drawer store-disabled={d(Store.mode, m => m !== 'draw')} />
-          <Paster store-disabled={d(Store.mode, m => m !== 'paste')} />
+          <Drawer store-disabled={d(Store.drawMode, m => m !== 'draw')} />
+          <Paster store-disabled={d(Store.drawMode, m => m !== 'paste')} />
           <Renderer />
         </div>
         <Timeline />

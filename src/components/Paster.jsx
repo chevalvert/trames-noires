@@ -35,10 +35,12 @@ export default class Drawer extends Component {
     const dx = lastLine.points[0][0] - nx
     const dy = lastLine.points[0][1] - ny
 
+    // TODO[optim] directly point to the cloned line and use an offset property
     const line = new Line({
       points: lastLine.points.map(([x, y]) => [x - dx, y - dy]),
       firstFrame: Store.raf.frameCount.get(),
-      style: Object.assign({}, lastLine.style, Store.style.current)
+      style: Object.assign({}, lastLine.style, Store.style.current),
+      fillMode: Store.fillMode.get()
     })
 
     Raf.start()

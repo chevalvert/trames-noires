@@ -1,12 +1,15 @@
 import smooth from 'chaikin-smooth'
+import Store from '/store'
 
 export default class Line {
   constructor ({
     points = [],
+    fillMode = 'AA→AB',
     firstFrame = 0,
     style = {}
   } = {}) {
     this.points = points
+    this.fillMode = fillMode
     this.firstFrame = firstFrame
     this.style = style
   }
@@ -19,7 +22,11 @@ export default class Line {
     this.points.push(point)
   }
 
-  render (context, frame = Number.POSITIVE_INFINITY, { smoothed = true, style = this.style } = {}) {
+  render (context, frame = Number.POSITIVE_INFINITY, {
+    smoothed = true,
+    fillMode = this.fillMode,
+    style = this.style
+  } = {}) {
     if (this.isEmpty) return
     if (frame < this.firstFrame) return
 
@@ -32,11 +39,34 @@ export default class Line {
       context[prop] = value
     }
 
-    // ??? time fill modes
+    // Handle various time fill modes:
+    const bounds = []
+    switch (fillMode) {
+      case 'AB':
+        bounds[0] = 0
+        bounds[1] = this.points.length
+        break
+
+      case 'AA→AB':
+        bounds[0] = 0
+        bounds[1] = frame - this.firstFrame
+        break
+
+      case 'AA→BB':
+        bounds[0] = Math.max(0, frame - this.firstFrame - Store.AA_AB_FILL_MODE_LENGTH.get())
+        bounds[1] = frame - this.firstFrame
+        break
+
+      case 'AA→AB→BB':
+        bounds[0] = Math.max(0, frame - this.firstFrame - this.points.length / 2)
+        bounds[1] = frame - this.firstFrame
+        break
+    }
+
     // Slice the points before smoothing to ensure correct time sync
     const points = smoothed
-      ? smooth(this.points.slice(0, frame - this.firstFrame))
-      : this.points.slice(0, frame - this.firstFrame)
+      ? smooth(this.points.slice(bounds[0], bounds[1]))
+      : this.points.slice(bounds[0], bounds[1])
 
     // Draw line
     for (let index = 0; index < points.length; index++) {
@@ -52,6 +82,7 @@ export default class Line {
   toJSON () {
     return {
       points: this.points,
+      fillMode: this.fillMode,
       firstFrame: this.firstFrame,
       style: this.style
     }

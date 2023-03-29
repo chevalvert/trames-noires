@@ -34,6 +34,7 @@ export default class Renderer extends Component {
       // Draw dashed ghost
       if (wireframe) {
         line.render(context, undefined, {
+          fillMode: 'AB',
           style: {
             lineWidth: 2,
             strokeStyle: 'rgba(255 255 255 / 50%)',

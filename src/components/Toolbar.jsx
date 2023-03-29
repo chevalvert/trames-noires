@@ -1,4 +1,3 @@
-// TODO 3 fill modes : aa->ab, aa->ab->bb, aa->bb
 // TODO export JSON to GCS and return uid
 // TODO import from GCS uid
 
@@ -17,6 +16,7 @@ import IconRepeat from 'iconoir/icons/keyframes.svg?raw'
 import IconUndo from 'iconoir/icons/undo.svg?raw'
 import IconWireframeOn from 'iconoir/icons/eye-off.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-empty.svg?raw'
+import IconFillMode from 'iconoir/icons/bounce-right.svg?raw'
 
 export default class Toolbar extends Component {
   beforeRender () {
@@ -34,35 +34,49 @@ export default class Toolbar extends Component {
           <fieldset>
             <Button
               icon={IconDraw}
-              store-hidden={d(Store.mode, m => m !== 'draw')}
-              event-click={() => Store.mode.set('paste')}
+              store-hidden={d(Store.drawMode, m => m !== 'draw')}
+              event-click={() => Store.drawMode.set('paste')}
               label='Dessin'
               store-disabled={state.hasNoLines}
             />
             <Button
               icon={IconRepeat}
-              store-hidden={d(Store.mode, m => m !== 'paste')}
+              store-hidden={d(Store.drawMode, m => m !== 'paste')}
               label='Tampon'
-              event-click={() => Store.mode.set('draw')}
+              event-click={() => Store.drawMode.set('draw')}
             />
           </fieldset>
 
           <Switcher
-            values={Store.LINE_WIDTHS.get().map(({ label, value }) => (
-              { icon: IconCircle, class: `disc disc-${label}`, value }
-            ))}
+            values={Store.LINE_WIDTHS.get().map(({ name, value }) => ({
+              value,
+              icon: IconCircle,
+              class: `disc disc-${name}`
+            }))}
             event-change={value => {
               Store.style.update(style => ({ ...style, lineWidth: value }), true)
             }}
           />
 
           <Switcher
-            values={Store.COLORS.get().map(({ label, value }) => (
-              { icon: IconCircle, class: 'disc', style: `--color: ${value}`, value }
-            ))}
+            values={Store.COLORS.get().map(({ label, value }) => ({
+              value,
+              icon: IconCircle,
+              class: 'disc',
+              style: `--color: ${value}`
+            }))}
             event-change={value => {
               Store.style.update(style => ({ ...style, strokeStyle: value }), true)
             }}
+          />
+
+          <Switcher
+            values={Store.FILL_MODES.get().map(({ value }) => ({
+              value,
+              icon: IconFillMode,
+              label: value.replace(/(→)/g, '&thinsp;$1&thinsp;')
+            }))}
+            event-change={value => Store.fillMode.set(value)}
           />
         </fieldset>
 
