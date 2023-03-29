@@ -2,11 +2,10 @@ import { r, w } from '/utils/state'
 
 const Store = {
   // Constants
-  MAX_LINE_LENGTH: r(40),
   LINE_WIDTHS: r([
-    { label: 'small', value: 5 },
     { label: 'medium', value: 10 },
-    { label: 'large', value: 20 }
+    { label: 'large', value: 20 },
+    { label: 'small', value: 5 }
   ]),
   COLORS: r([
     // Thanks Pico8 !
@@ -23,6 +22,7 @@ const Store = {
 
   // App state
   mode: w('draw'), // draw|paste
+  wireframe: w(true),
   style: w({
     lineWidth: 10,
     strokeStyle: 'white',
@@ -34,7 +34,7 @@ const Store = {
   // Controllers
   raf: {
     fps: r(60),
-    maxDuration: r(120),
+    maxDuration: r(60 * 5),
     isRunning: w(false),
     frameCount: w(0)
   }

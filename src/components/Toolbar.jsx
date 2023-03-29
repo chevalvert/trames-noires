@@ -1,5 +1,10 @@
+// TODO toggle wireframe
+// TODO 3 fill modes : aa->ab, aa->ab->bb, aa->bb
+// TODO export JSON to GCS and return uid
+// TODO import from GCS uid
+
 import './Toolbar.scss'
-import { d } from '/utils/state'
+import { d, not } from '/utils/state'
 import { Component } from '/utils/jsx'
 
 import Store from '/store'
@@ -9,8 +14,10 @@ import Switcher from '/components/Switcher'
 import IconCircle from 'iconoir/icons/circle.svg?raw'
 import IconClear from 'iconoir/icons/trash.svg?raw'
 import IconDraw from 'iconoir/icons/edit-pencil.svg?raw'
-import IconRepeat from 'iconoir/icons/keyframes-couple.svg?raw'
+import IconRepeat from 'iconoir/icons/keyframes.svg?raw'
 import IconUndo from 'iconoir/icons/undo.svg?raw'
+import IconWireframeOn from 'iconoir/icons/star.svg?raw'
+import IconWireframeOff from 'iconoir/icons/star-dashed.svg?raw'
 
 export default class Toolbar extends Component {
   beforeRender () {
@@ -30,10 +37,13 @@ export default class Toolbar extends Component {
               icon={IconDraw}
               store-hidden={d(Store.mode, m => m !== 'draw')}
               event-click={() => Store.mode.set('paste')}
+              label='Dessin'
+              store-disabled={state.hasNoLines}
             />
             <Button
               icon={IconRepeat}
               store-hidden={d(Store.mode, m => m !== 'paste')}
+              label='Tampon'
               event-click={() => Store.mode.set('draw')}
             />
           </fieldset>
@@ -54,6 +64,19 @@ export default class Toolbar extends Component {
             event-change={value => {
               Store.style.update(style => ({ ...style, strokeStyle: value }), true)
             }}
+          />
+        </fieldset>
+
+        <fieldset>
+          <Button
+            icon={IconWireframeOff}
+            store-hidden={not(Store.wireframe)}
+            event-click={() => Store.wireframe.set(!Store.wireframe.current)}
+          />
+          <Button
+            icon={IconWireframeOn}
+            store-hidden={Store.wireframe}
+            event-click={() => Store.wireframe.set(!Store.wireframe.current)}
           />
         </fieldset>
 

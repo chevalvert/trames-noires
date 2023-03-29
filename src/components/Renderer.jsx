@@ -19,6 +19,7 @@ export default class Renderer extends Component {
 
   afterRender () {
     Store.lines.subscribe(this.handleTick)
+    Store.wireframe.subscribe(this.handleTick)
     Store.raf.frameCount.subscribe(this.handleTick)
   }
 
@@ -26,17 +27,20 @@ export default class Renderer extends Component {
     this.refs.canvas.clear()
 
     const frame = Store.raf.frameCount.get()
+    const wireframe = Store.wireframe.get()
     const { context } = this.refs.canvas
 
     for (const line of Store.lines.get()) {
       // Draw dashed ghost
-      line.render(context, undefined, {
-        style: {
-          lineWidth: 2,
-          strokeStyle: 'rgba(255 255 255 / 50%)',
-          lineDash: [10, 10]
-        }
-      })
+      if (wireframe) {
+        line.render(context, undefined, {
+          style: {
+            lineWidth: 2,
+            strokeStyle: 'rgba(255 255 255 / 50%)',
+            lineDash: [10, 10]
+          }
+        })
+      }
 
       // Draw current line
       line.render(context, frame, { smoothed: true })
