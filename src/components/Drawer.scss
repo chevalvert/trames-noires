@@ -1,0 +1,7 @@
+.drawer {
+  cursor: crosshair;
+
+  &.is-disabled {
+    pointer-events: none;
+  }
+}

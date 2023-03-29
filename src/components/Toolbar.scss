@@ -1,0 +1,10 @@
+.toolbar {
+  display: flex;
+  gap: var(--gutter);
+  justify-content: space-between;
+  pointer-events: none;
+
+  .button {
+    pointer-events: auto;
+  }
+}

@@ -1,0 +1,55 @@
+body {
+  overscroll-behavior: none;
+
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: var(--color-text);
+
+  background: var(--color-background);
+}
+
+main {
+  isolation: isolate;
+}
+
+input, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+fieldset {
+  display: flex;
+  gap: var(--gutter);
+
+  &.group {
+    gap: unset;
+
+    .button[disabled],
+    .button.is-disabled {
+      opacity: 1;
+      & > * { opacity: 0.3; }
+    }
+
+    .button:not(:last-child) {
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .button + input {
+      border-left-style: dashed;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+}
+
+.disc svg {
+  fill: var(--color, var(--color-text));
+  path { stroke: none; }
+}
+
+.disc-small svg { transform: scale(0.25); }
+.disc-medium svg { transform: scale(0.7); }
+.disc-large svg { transform: scale(1.2); }
+

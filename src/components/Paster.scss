@@ -1,0 +1,8 @@
+.paster {
+  cursor: copy;
+  cursor: cell;
+
+  &.is-disabled {
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,38 @@
+.splashscreen {
+  position: fixed;
+  z-index: 3;
+  inset: 0;
+
+  display: grid;
+
+  cursor: pointer;
+
+  place-items: center;
+
+  background: var(--color-background);
+
+  @include desktop {
+    display: none;
+  }
+
+  &__content {
+    display: flex;
+    margin-top: 5rem;
+
+    flex-direction: column;
+    gap: calc(var(--gutter) * 1.5);
+    align-items: center;
+  }
+
+  &__icon {
+    fill: var(--color-text);
+    width: 6rem;
+    animation: bounce-spin 900ms infinite ease;
+  }
+
+  &__text {
+    max-width: 10rem;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+}

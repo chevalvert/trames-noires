@@ -1,0 +1,36 @@
+.button {
+  @include no-select;
+
+  display: flex;
+  padding: var(--gutter-internal);
+  overflow: hidden;
+
+  font-family: var(--font-family-sans);
+  color: var(--color-text);
+  cursor: pointer;
+
+  align-items: center;
+
+  background: var(--color-background);
+  border: 1px solid currentcolor;
+  border-radius: var(--round);
+  appearance: none;
+
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__icon {
+    margin: 0 auto;
+    animation: button 120ms ease-out;
+  }
+
+  &__icon + &__text:not(:empty) {
+    margin-left: var(--gutter-internal);
+  }
+}
