@@ -1,4 +1,3 @@
-// TODO toggle wireframe
 // TODO 3 fill modes : aa->ab, aa->ab->bb, aa->bb
 // TODO export JSON to GCS and return uid
 // TODO import from GCS uid
@@ -16,8 +15,8 @@ import IconClear from 'iconoir/icons/trash.svg?raw'
 import IconDraw from 'iconoir/icons/edit-pencil.svg?raw'
 import IconRepeat from 'iconoir/icons/keyframes.svg?raw'
 import IconUndo from 'iconoir/icons/undo.svg?raw'
-import IconWireframeOn from 'iconoir/icons/star.svg?raw'
-import IconWireframeOff from 'iconoir/icons/star-dashed.svg?raw'
+import IconWireframeOn from 'iconoir/icons/eye-off.svg?raw'
+import IconWireframeOff from 'iconoir/icons/eye-empty.svg?raw'
 
 export default class Toolbar extends Component {
   beforeRender () {
@@ -78,21 +77,21 @@ export default class Toolbar extends Component {
             store-hidden={Store.wireframe}
             event-click={() => Store.wireframe.set(!Store.wireframe.current)}
           />
-        </fieldset>
 
-        <fieldset>
-          <Button
-            icon={IconUndo}
-            store-disabled={state.hasNoLines}
-            event-click={this.handleUndo}
-          />
-          <Button
-            icon={IconClear}
-            store-disabled={d(Store.lines, lines => !lines.length)}
-            event-click={() => {
-              if (window.confirm('Tout effacer ?')) Store.lines.set([])
-            }}
-          />
+          <fieldset class='group'>
+            <Button
+              icon={IconUndo}
+              store-disabled={state.hasNoLines}
+              event-click={this.handleUndo}
+            />
+            <Button
+              icon={IconClear}
+              store-disabled={d(Store.lines, lines => !lines.length)}
+              event-click={() => {
+                if (window.confirm('Tout effacer ?')) Store.lines.set([])
+              }}
+            />
+          </fieldset>
         </fieldset>
       </section>
     )

@@ -24,8 +24,7 @@ fieldset {
   &.group {
     gap: unset;
 
-    .button[disabled],
-    .button.is-disabled {
+    .button[disabled] {
       opacity: 1;
       & > * { opacity: 0.3; }
     }
@@ -36,7 +35,8 @@ fieldset {
       border-bottom-right-radius: 0;
     }
 
-    .button + input {
+    .button + input,
+    .button + .button {
       border-left-style: dashed;
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
