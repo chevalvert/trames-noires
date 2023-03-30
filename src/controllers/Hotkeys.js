@@ -11,6 +11,38 @@ export default [
     callback: Raf.toggle
   },
   {
+    key: 'left',
+    description: 'Reculer d’une image',
+    callback: () => {
+      Raf.stop()
+      Store.raf.frameCount.update(fc => Math.max(0, fc - 1))
+    }
+  },
+  {
+    key: 'shift+left',
+    description: 'Reculer de 10 images',
+    callback: () => {
+      Raf.stop()
+      Store.raf.frameCount.update(fc => Math.max(0, fc - 10))
+    }
+  },
+  {
+    key: 'right',
+    description: 'Avancer d’une image',
+    callback: () => {
+      Raf.stop()
+      Store.raf.frameCount.update(fc => Math.min(fc + 1, Store.raf.maxDuration.get()))
+    }
+  },
+  {
+    key: 'shift+right',
+    description: 'Avancer de 10 images',
+    callback: () => {
+      Raf.stop()
+      Store.raf.frameCount.update(fc => Math.min(fc + 10, Store.raf.maxDuration.get()))
+    }
+  },
+  {
     key: 'cmd+z',
     description: 'Effacer le dernier dessin',
     callback: Actions.undo
