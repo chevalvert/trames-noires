@@ -28,7 +28,7 @@ export default class Drawer extends Component {
   }
 
   handleClick (e) {
-    const lastLine = lastOf(Store.lines.get())
+    const lastLine = lastOf(Store.app.lines.get())
     if (!lastLine) return
 
     const [nx, ny] = pointer(e)
@@ -39,14 +39,14 @@ export default class Drawer extends Component {
     const line = new Line({
       points: lastLine.points.map(([x, y]) => [x - dx, y - dy]),
       firstFrame: Store.raf.frameCount.get(),
-      style: Object.assign({}, lastLine.style, Store.style.current),
-      fillMode: Store.fillMode.get()
+      style: Object.assign({}, lastLine.style, Store.app.style.current),
+      fillMode: Store.app.fillMode.get()
     })
 
     Raf.start()
 
     // Transfer line to Store
-    Store.lines.update(lines => {
+    Store.app.lines.update(lines => {
       lines.push(line)
       return lines
     }, true)

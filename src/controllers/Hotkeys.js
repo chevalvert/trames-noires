@@ -48,14 +48,14 @@ export default [
     callback: Actions.undo
   },
   {
-    key: 'cmd+r',
+    key: 'cmd+x',
     description: 'Tout effacer',
     callback: Actions.clear
   },
   {
     key: 'w',
     description: 'Afficher/masquer les dessins à venir',
-    callback: () => Store.wireframe.update(w => !w)
+    callback: () => Store.app.wireframe.update(w => !w)
   }
 ].map(register)
 

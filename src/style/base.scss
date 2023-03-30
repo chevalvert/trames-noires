@@ -24,11 +24,6 @@ fieldset {
   &.group {
     gap: unset;
 
-    .button[disabled] {
-      opacity: 1;
-      & > * { opacity: 0.3; }
-    }
-
     .button:not(:last-child) {
       border-right: 0;
       border-top-right-radius: 0;

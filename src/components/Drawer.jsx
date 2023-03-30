@@ -65,8 +65,8 @@ export default class Drawer extends Component {
 
     const line = new Line({
       firstFrame: Store.raf.frameCount.get(),
-      fillMode: Store.fillMode.get(),
-      style: Store.style.get()
+      fillMode: Store.app.fillMode.get(),
+      style: Store.app.style.get()
     })
 
     this.state.line.set(line)
@@ -106,7 +106,7 @@ export default class Drawer extends Component {
     if (!line || line.isEmpty) return
 
     // Transfer line to Store
-    Store.lines.update(lines => {
+    Store.app.lines.update(lines => {
       lines.push(line)
       return lines
     }, true)

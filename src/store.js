@@ -29,24 +29,32 @@ const Store = {
     { value: 'AB' }
   ]),
 
-  // App state
-  drawMode: w('draw'), // draw|paste
-  wireframe: w(true),
-  fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
-  style: w({
-    lineWidth: 10,
-    strokeStyle: 'white',
-    lineJoin: 'round',
-    lineCap: 'round'
-  }),
-  lines: w([]),
+  app: {
+    drawMode: w('draw'), // draw|paste
+    fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
+    wireframe: w(true),
 
-  // Controllers
+    lines: w([]),
+    style: w({
+      lineWidth: 10,
+      strokeStyle: 'white',
+      lineJoin: 'round',
+      lineCap: 'round'
+    })
+  },
+
   raf: {
     fps: r(60),
     maxDuration: r(60 * 5),
     isRunning: w(false),
     frameCount: w(0)
+  },
+
+  api: {
+    url: r(import.meta.env.VITE_API_URL),
+    pollingInterval: r(1000),
+    pollingMaxAttempts: r(30),
+    version: w(null)
   }
 }
 

@@ -1,6 +1,3 @@
-// TODO export JSON to GCS and return uid
-// TODO import from GCS uid
-
 import './Toolbar.scss'
 import { d, not } from '/utils/state'
 import { Component } from '/utils/jsx'
@@ -23,7 +20,7 @@ import IconFillMode from 'iconoir/icons/timer.svg?raw'
 export default class Toolbar extends Component {
   beforeRender () {
     this.state = {
-      hasNoLines: d(Store.lines, lines => !lines.length)
+      hasNoLines: d(Store.app.lines, lines => !lines.length)
     }
   }
 
@@ -36,16 +33,16 @@ export default class Toolbar extends Component {
               icon={IconDraw}
               label='Dessin'
               class='button--draw-mode'
-              store-hidden={d(Store.drawMode, m => m !== 'draw')}
+              store-hidden={d(Store.app.drawMode, m => m !== 'draw')}
               store-disabled={state.hasNoLines}
-              event-click={() => Store.drawMode.set('paste')}
+              event-click={() => Store.app.drawMode.set('paste')}
             />
             <Button
               icon={IconRepeat}
               label='Tampon'
               class='button--draw-mode'
-              store-hidden={d(Store.drawMode, m => m !== 'paste')}
-              event-click={() => Store.drawMode.set('draw')}
+              store-hidden={d(Store.app.drawMode, m => m !== 'paste')}
+              event-click={() => Store.app.drawMode.set('draw')}
             />
           </fieldset>
 
@@ -56,7 +53,7 @@ export default class Toolbar extends Component {
               class: `disc disc-${name}`
             }))}
             event-change={value => {
-              Store.style.update(style => ({ ...style, lineWidth: value }), true)
+              Store.app.style.update(style => ({ ...style, lineWidth: value }), true)
             }}
           />
 
@@ -68,7 +65,7 @@ export default class Toolbar extends Component {
               style: `--color: ${value}`
             }))}
             event-change={value => {
-              Store.style.update(style => ({ ...style, strokeStyle: value }), true)
+              Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
             }}
           />
 
@@ -78,20 +75,20 @@ export default class Toolbar extends Component {
               icon: IconFillMode,
               label: value.replace(/(→)/g, '&thinsp;$1&thinsp;')
             }))}
-            event-change={value => Store.fillMode.set(value)}
+            event-change={value => Store.app.fillMode.set(value)}
           />
         </fieldset>
 
         <fieldset>
           <Button
             icon={IconWireframeOff}
-            store-hidden={not(Store.wireframe)}
-            event-click={() => Store.wireframe.set(false)}
+            store-hidden={not(Store.app.wireframe)}
+            event-click={() => Store.app.wireframe.set(false)}
           />
           <Button
             icon={IconWireframeOn}
-            store-hidden={Store.wireframe}
-            event-click={() => Store.wireframe.set(true)}
+            store-hidden={Store.app.wireframe}
+            event-click={() => Store.app.wireframe.set(true)}
           />
 
           <fieldset class='group'>
@@ -102,7 +99,7 @@ export default class Toolbar extends Component {
             />
             <Button
               icon={IconClear}
-              store-disabled={d(Store.lines, lines => !lines.length)}
+              store-disabled={d(Store.app.lines, lines => !lines.length)}
               event-click={Actions.clear}
             />
           </fieldset>

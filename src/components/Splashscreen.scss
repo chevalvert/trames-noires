@@ -5,14 +5,14 @@
 
   display: grid;
 
-  cursor: pointer;
-
   place-items: center;
+
+  cursor: pointer;
 
   background: var(--color-background);
 
-  @include desktop {
-    display: none;
+  &:not(.is-clickable) {
+    pointer-events: none;
   }
 
   &__content {

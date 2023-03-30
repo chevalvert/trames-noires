@@ -1,10 +1,11 @@
 import './Timeline.scss'
-import { not } from '/utils/state'
+import { d, not } from '/utils/state'
 import { Component } from '/utils/jsx'
 
 import Store from '/store'
 import Button from '/components/Button'
 
+import Actions from '/controllers/Actions'
 import Raf from '/controllers/Raf'
 
 import IconExport from 'iconoir/icons/save-floppy-disk.svg?raw'
@@ -43,7 +44,9 @@ export default class Timeline extends Component {
 
         <Button
           icon={IconExport}
-          event-click={this.handleExport}
+          event-click={Actions.save}
+          store-hidden={not(Store.api.version)}
+          store-disabled={d(Store.app.lines, lines => !lines.length)}
         />
       </section>
     )
