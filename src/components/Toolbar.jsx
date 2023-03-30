@@ -9,6 +9,8 @@ import Store from '/store'
 import Button from '/components/Button'
 import Switcher from '/components/Switcher'
 
+import Actions from '/controllers/Actions'
+
 import IconCircle from 'iconoir/icons/circle.svg?raw'
 import IconClear from 'iconoir/icons/trash.svg?raw'
 import IconDraw from 'iconoir/icons/edit-pencil.svg?raw'
@@ -20,9 +22,6 @@ import IconFillMode from 'iconoir/icons/timer.svg?raw'
 
 export default class Toolbar extends Component {
   beforeRender () {
-    this.handleUndo = this.handleUndo.bind(this)
-    this.handleClear = this.handleClear.bind(this)
-
     this.state = {
       hasNoLines: d(Store.lines, lines => !lines.length)
     }
@@ -99,27 +98,16 @@ export default class Toolbar extends Component {
             <Button
               icon={IconUndo}
               store-disabled={state.hasNoLines}
-              event-click={this.handleUndo}
+              event-click={Actions.undo}
             />
             <Button
               icon={IconClear}
               store-disabled={d(Store.lines, lines => !lines.length)}
-              event-click={this.handleClear}
+              event-click={Actions.clear}
             />
           </fieldset>
         </fieldset>
       </section>
     )
-  }
-
-  handleUndo () {
-    Store.lines.update(lines => lines.slice(0, lines.length - 1), true)
-    if (!Store.lines.current.length) Store.drawMode.set('draw')
-  }
-
-  handleClear () {
-    if (!window.confirm('Tout effacer ?')) return
-    Store.lines.set([])
-    Store.drawMode.set('draw')
   }
 }

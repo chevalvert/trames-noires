@@ -38,6 +38,7 @@
     "chaikin-smooth": "^1.0.4",
     "classnames": "^2.3.2",
     "debounce": "^1.2.1",
+    "hotkeys-js": "^3.10.1",
     "iconoir": "^6.5.0"
   }
 }
