@@ -35,15 +35,17 @@ export default class Toolbar extends Component {
           <fieldset>
             <Button
               icon={IconDraw}
-              store-hidden={d(Store.drawMode, m => m !== 'draw')}
-              event-click={() => Store.drawMode.set('paste')}
               label='Dessin'
+              class='button--draw-mode'
+              store-hidden={d(Store.drawMode, m => m !== 'draw')}
               store-disabled={state.hasNoLines}
+              event-click={() => Store.drawMode.set('paste')}
             />
             <Button
               icon={IconRepeat}
-              store-hidden={d(Store.drawMode, m => m !== 'paste')}
               label='Tampon'
+              class='button--draw-mode'
+              store-hidden={d(Store.drawMode, m => m !== 'paste')}
               event-click={() => Store.drawMode.set('draw')}
             />
           </fieldset>

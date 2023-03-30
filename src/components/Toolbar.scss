@@ -11,5 +11,11 @@
 
   .button {
     pointer-events: auto;
+
+    @include mobile {
+      &--draw-mode .button__text {
+        display: none;
+      }
+    }
   }
 }

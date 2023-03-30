@@ -17,8 +17,9 @@
   --round: 1rem;
 
   @include mobile {
+    --font-size: 1.1rem;
     --gutter: 1.4rem;
-    --gutter-internal: 1.4rem;
+    --gutter-internal: 1.2rem;
     --round: 1.4rem;
   }
 }

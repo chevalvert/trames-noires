@@ -5,7 +5,7 @@
   padding: var(--gutter-internal);
   overflow: hidden;
 
-  font-family: var(--font-family-sans);
+  font: inherit;
   color: var(--color-text);
   cursor: pointer;
 
