@@ -1,5 +1,5 @@
 {
-  "name": "tooooools-trames-noires",
+  "name": "trames-noires",
   "version": "0.0.0",
   "description": "A drawing tool",
   "scripts": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chevalvert/tooooools-trames-noires.git"
+    "url": "git+https://github.com/chevalvert/trames-noires.git"
   },
   "devDependencies": {
     "eslint": "^8.36.0",
