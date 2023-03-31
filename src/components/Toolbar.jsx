@@ -63,6 +63,7 @@ export default class Toolbar extends Component {
             values={Store.FILL_MODES.get().map(({ value }) => ({
               value,
               icon: IconFillMode,
+              // TODO use animated icon instead of using label
               label: value.replace(/(→)/g, '&thinsp;$1&thinsp;')
             }))}
             event-change={value => Store.app.fillMode.set(value)}

@@ -31,7 +31,10 @@ export default class Splashscreen extends Component {
   async handleClick () {
     if (!this.state.isClickable.get()) return
 
-    await document.body.requestFullscreen()
+    if (document.body.requestFullscreen) {
+      await document.body.requestFullscreen()
+    }
+
     this.destroy()
   }
 }

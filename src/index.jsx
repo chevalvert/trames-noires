@@ -1,7 +1,6 @@
 /* global __VERSION__ */
 
 // TODO video renderer
-// TODO use animated fill mode icon instead of using label
 
 import '/index.scss'
 import { render } from '/utils/jsx'
