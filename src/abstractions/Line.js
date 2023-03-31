@@ -22,15 +22,28 @@ export default class Line {
     this.points.push(point)
   }
 
-  render (context, frame = Number.POSITIVE_INFINITY, {
+  render (context, {
+    frame = Number.POSITIVE_INFINITY,
     smoothed = true,
     fillMode = this.fillMode,
-    style = this.style
+    style = this.style,
+    preferSprite = true
   } = {}) {
     if (this.isEmpty) return
     if (frame < this.firstFrame && fillMode !== 'AB') return
 
     context.save()
+
+    // Try to use a sprite on AB lines
+    if (fillMode === 'AB' && preferSprite) {
+      if (!this.sprite) {
+        this.sprite = this.toSprite(context, { smoothed, fillMode, style })
+      }
+      context.drawImage(this.sprite, 0, 0)
+      context.restore()
+      return
+    }
+
     context.beginPath()
 
     // Apply style
@@ -39,7 +52,7 @@ export default class Line {
       context[prop] = value
     }
 
-    // Handle various time fill modes:
+    // Handle various time fill modes
     const bounds = []
     switch (fillMode) {
       case 'AB':
@@ -77,6 +90,15 @@ export default class Line {
 
     context.stroke()
     context.restore()
+  }
+
+  toSprite (context, options) {
+    const canvas = document.createElement('canvas')
+    canvas.width = context.canvas.width
+    canvas.height = context.canvas.height
+
+    this.render(canvas.getContext('2d'), { ...options, preferSprite: false })
+    return canvas
   }
 
   toJSON () {

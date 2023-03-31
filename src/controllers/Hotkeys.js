@@ -55,7 +55,15 @@ export default [
   {
     key: 'w',
     description: 'Afficher/masquer les dessins à venir',
-    callback: () => Store.app.wireframe.update(w => !w)
+    callback: () => Store.app.viewMode.update(vm => vm === 'wireframe' ? 'preview' : 'wireframe')
+  },
+  {
+    key: 'tab',
+    description: 'Afficher / cacher l’interface',
+    callback: e => {
+      e.preventDefault()
+      Store.app.viewMode.update(vm => vm === 'no-ui' ? 'wireframe' : 'no-ui')
+    }
   }
 ].map(register)
 

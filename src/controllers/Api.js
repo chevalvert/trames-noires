@@ -41,16 +41,24 @@ export default {
   polling,
   import: async (uid) => {
     const response = await fetch(api('json/' + uid))
-    return response.json()
+
+    if (!response.ok && response.status !== 500) throw response
+    const json = response.json()
+    if (json.error) throw new Error(json.error)
+
+    return json
   },
 
-  export: async (object) => {
-    const response = await fetch(api('json'), {
+  export: async (object, uid) => {
+    const response = await fetch(api(uid ? 'json?uid=' + uid : 'json'), {
       method: 'PUT',
       body: JSON.stringify(object)
     })
 
-    // TODO handle error
-    return response.json()
+    if (!response.ok && response.status !== 500) throw response
+    const json = response.json()
+    if (json.error) throw new Error(json.error)
+
+    return json
   }
 }

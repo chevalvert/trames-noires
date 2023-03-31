@@ -13,7 +13,7 @@ import Toolbar from '/components/Toolbar'
 export default class App extends Component {
   template (props) {
     return (
-      <main class='app'>
+      <main class='app' store-data-view-mode={Store.app.viewMode}>
         <Toolbar />
         <div class='app__main'>
           <Drawer store-disabled={d(Store.app.drawMode, m => m !== 'draw')} />

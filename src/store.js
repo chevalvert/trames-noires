@@ -1,5 +1,9 @@
 import { r, w } from '/utils/state'
 
+import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
+import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
+import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
+
 const Store = {
   AA_AB_FILL_MODE_LENGTH: r(3),
 
@@ -29,10 +33,16 @@ const Store = {
     { value: 'AB' }
   ]),
 
+  VIEW_MODES: r([
+    { value: 'wireframe', icon: IconWireframeOn },
+    { value: 'preview', icon: IconWireframeOff },
+    { value: 'no-ui', icon: IconNoUI }
+  ]),
+
   app: {
     drawMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
-    wireframe: w(true),
+    viewMode: w('wireframe'), // wireframe|preview|no-ui
 
     lines: w([]),
     style: w({

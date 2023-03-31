@@ -1,5 +1,8 @@
 /* global __VERSION__ */
 
+// TODO video renderer
+// TODO use animated fill mode icon instead of using label
+
 import '/index.scss'
 import { render } from '/utils/jsx'
 
@@ -21,7 +24,7 @@ const uid = new URLSearchParams(window.location.search).get('uid')
     await Actions.load(uid)
     components[0].destroy()
   } else {
-    render(<Splashscreen />)
+    if (import.meta.env.PROD) render(<Splashscreen />)
   }
 
   render(<App />)

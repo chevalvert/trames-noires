@@ -1,10 +1,15 @@
+import { customAlphabet } from 'nanoid'
+
 import Store from '/store'
 import Line from '/abstractions/Line'
 import Api from '/controllers/Api'
+import Modal from '/controllers/Modal'
 import Raf from '/controllers/Raf'
 
-export function clear ({ force = false } = {}) {
-  if (!force && !window.confirm('Tout effacer ?')) return
+const nanoid = customAlphabet('0123456789ABCDEF', 6)
+
+export async function clear ({ force = false } = {}) {
+  if (!force && !(await Modal.confirm('Tout effacer ?'))) return
   Store.app.lines.set([])
   Store.app.drawMode.set('draw')
 }
@@ -16,17 +21,24 @@ export function undo () {
 
 export async function save () {
   const lines = Store.app.lines.current.map(line => line.toJSON())
-  const { uid } = await Api.export(lines)
-  // TODO modal
-  console.log(uid)
+  try {
+    const { uid } = await Api.export(lines, nanoid())
+    Modal.bigText(uid)
+  } catch (error) {
+    Modal.error(error)
+  }
 }
 
 export async function load (uid) {
   if (!Store.api.version.get()) await new Promise(resolve => Store.api.version.subscribeOnce(resolve))
-  const lines = await Api.import(uid)
-  // TODO handle 404
-  Store.app.lines.set(lines.map(line => new Line(line)))
-  Raf.start()
+  try {
+    const lines = await Api.import(uid)
+    Store.app.lines.set(lines.map(line => new Line(line)))
+    Raf.start()
+  } catch (error) {
+    if (error.status && error.status === 404) Modal.say('Impossible de trouver l’animation demandée', { title: 'Erreur' })
+    else Modal.error(error)
+  }
 }
 
 export default {
