@@ -1,7 +1,5 @@
 /* global __VERSION__ */
 
-// TODO video renderer
-
 import '/index.scss'
 import { render } from '/utils/jsx'
 

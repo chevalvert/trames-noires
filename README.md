@@ -18,6 +18,10 @@ $ npm run deploy:staging
 $ npm run version
 ```
 
+## Related
+
+[chevalvert/trames-noires-to-video](https://github.com/chevalvert/trames-noires-to-video)
+
 ## Credits
 
 JSX and state utils heavily based on [**pqml**](https://github.com/pqml)’s work.
