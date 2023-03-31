@@ -7,7 +7,11 @@ import IconCheck from 'iconoir/icons/check.svg?raw'
 import IconCancel from 'iconoir/icons/cancel.svg?raw'
 
 export function bigText (message, props) {
-  render(<Modal {...props} bigText>{message}</Modal>)
+  render(
+    <Modal {...props} bigText>
+      {props.url ? <a href={props.url}>{message}</a> : message}
+    </Modal>
+  )
 }
 
 export function say (message, props) {

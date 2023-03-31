@@ -23,7 +23,7 @@ main {
   isolation: isolate;
 }
 
-input, button {
+* {
   -webkit-tap-highlight-color: transparent;
 }
 
