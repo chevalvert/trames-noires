@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "trames-noires",
   "version": "0.0.0",
-  "description": "Opinionated Vite boilerplate",
+  "description": "A drawing tool",
   "scripts": {
     "start": "vite",
     "build": "vite build",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tooooools/boilerplate.git"
+    "url": "git+https://github.com/chevalvert/trames-noires.git"
   },
   "devDependencies": {
     "eslint": "^8.36.0",
@@ -38,6 +38,8 @@
     "chaikin-smooth": "^1.0.4",
     "classnames": "^2.3.2",
     "debounce": "^1.2.1",
-    "iconoir": "^6.5.0"
+    "hotkeys-js": "^3.10.1",
+    "iconoir": "^6.5.0",
+    "nanoid": "^4.0.2"
   }
 }

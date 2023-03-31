@@ -1,42 +1,70 @@
 import { r, w } from '/utils/state'
 
+import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
+import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
+import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
+
 const Store = {
-  // Constants
-  MAX_LINE_LENGTH: r(40),
+  AA_AB_FILL_MODE_LENGTH: r(3),
+
   LINE_WIDTHS: r([
-    { label: 'small', value: 5 },
-    { label: 'medium', value: 10 },
-    { label: 'large', value: 20 }
+    { value: 10, name: 'medium' },
+    { value: 20, name: 'large' },
+    { value: 5, name: 'small' }
   ]),
+
   COLORS: r([
     // Thanks Pico8 !
-    { label: 'white', value: '#FFF1E8' },
-    { label: 'red', value: '#FF004D' },
-    { label: 'orange', value: '#FFA300' },
-    { label: 'yellow', value: '#FFEC27' },
-    { label: 'green', value: '#00E436' },
-    { label: 'blue', value: '#29ADFF' },
-    { label: 'lavender', value: '#83769C' },
-    { label: 'pink', value: '#FF77A8' },
-    { label: 'light-peach', value: '#FFCCAA' }
+    { value: '#FFF1E8' },
+    { value: '#FF004D' },
+    { value: '#FFA300' },
+    { value: '#FFEC27' },
+    { value: '#00E436' },
+    { value: '#29ADFF' },
+    { value: '#83769C' },
+    { value: '#FF77A8' },
+    { value: '#FFCCAA' }
   ]),
 
-  // App state
-  mode: w('draw'), // draw|paste
-  style: w({
-    lineWidth: 10,
-    strokeStyle: 'white',
-    lineJoin: 'round',
-    lineCap: 'round'
-  }),
-  lines: w([]),
+  FILL_MODES: r([
+    { value: 'AA→AB' },
+    { value: 'AA→BB' },
+    { value: 'AA→AB→BB' },
+    { value: 'AB' }
+  ]),
 
-  // Controllers
+  VIEW_MODES: r([
+    { value: 'wireframe', icon: IconWireframeOn },
+    { value: 'preview', icon: IconWireframeOff },
+    { value: 'no-ui', icon: IconNoUI }
+  ]),
+
+  app: {
+    drawMode: w('draw'), // draw|paste
+    fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
+    viewMode: w('wireframe'), // wireframe|preview|no-ui
+
+    lines: w([]),
+    style: w({
+      lineWidth: 10,
+      strokeStyle: 'white',
+      lineJoin: 'round',
+      lineCap: 'round'
+    })
+  },
+
   raf: {
     fps: r(60),
-    maxDuration: r(120),
+    maxDuration: r(60 * 5),
     isRunning: w(false),
     frameCount: w(0)
+  },
+
+  api: {
+    url: r(import.meta.env.VITE_API_URL),
+    pollingInterval: r(1000),
+    pollingMaxAttempts: r(30),
+    version: w(null)
   }
 }
 

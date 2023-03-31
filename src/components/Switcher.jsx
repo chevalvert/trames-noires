@@ -8,19 +8,20 @@ import noop from '/utils/noop'
 
 export default class Switcher extends Component {
   beforeRender (props) {
+    this.update = this.update.bind(this)
     this.state = {
-      value: w(((props.values || [])[0] || {}).value)
+      value: props['store-value'] || w(((props.values || [])[0] || {}).value)
     }
   }
 
   template (props, state) {
     return (
-      <div icon={classnames('switcher', props.class)}>
+      <div class={classnames('switcher', props.class)}>
         {props.values.map((props, index) => (
           <Button
             {...props}
             ref={this.refArray('buttons')}
-            event-click={() => this.handleChange(index + 1)}
+            event-click={() => this.handleChange(this.props.values[(index + 1) % this.props.values.length])}
           />
         ))}
       </div>
@@ -28,18 +29,20 @@ export default class Switcher extends Component {
   }
 
   afterMount () {
-    this.handleChange(0, this.state.value.get())
+    this.state.value.subscribe(this.update)
+    this.update()
   }
 
-  handleChange (index) {
-    index = index % this.props.values.length
-
-    const prop = this.props.values[index]
-    ;(this.props['event-change'] || noop)(prop.value)
-    this.state.value.set(prop.value)
+  update () {
+    const index = this.props.values.findIndex(({ value }) => value === this.state.value.current)
 
     for (let i = 0; i < this.refs.buttons.length; i++) {
       this.refs.buttons[i].state.isHidden.set(i !== index)
     }
+  }
+
+  handleChange (props) {
+    ;(this.props['event-change'] || noop)(props.value)
+    this.state.value.set(props.value)
   }
 }

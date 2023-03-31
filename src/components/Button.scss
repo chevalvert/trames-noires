@@ -1,11 +1,12 @@
 .button {
+  @include easing(120ms, opacity);
   @include no-select;
 
   display: flex;
   padding: var(--gutter-internal);
   overflow: hidden;
 
-  font-family: var(--font-family-sans);
+  font: inherit;
   color: var(--color-text);
   cursor: pointer;
 
@@ -25,9 +26,23 @@
     display: none;
   }
 
+  &.is-waiting {
+    cursor: wait;
+  }
+
   &__icon {
     margin: 0 auto;
     animation: button 120ms ease-out;
+  }
+
+  &.is-waiting &__icon {
+    position: relative;
+    color: transparent;
+    animation: button 120ms ease-out;
+
+    &::before {
+      @include loader(var(--gutter), 2px, var(--color-text));
+    }
   }
 
   &__icon + &__text:not(:empty) {

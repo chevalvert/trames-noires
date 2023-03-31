@@ -60,6 +60,8 @@ export default class Button extends Component {
   async handleClick (e) {
     if (this.state.isWaiting.get()) return e.preventDefault()
 
+    this.animate()
+
     this.state.isWaiting.set(true)
     await (this.props['event-click'] || noop)(e)
 
@@ -67,7 +69,5 @@ export default class Button extends Component {
     // cause this component to be destroyed
     if (!this.mounted) return
     this.state.isWaiting.set(false)
-
-    this.animate()
   }
 }

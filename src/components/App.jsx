@@ -9,17 +9,15 @@ import Paster from '/components/Paster'
 import Renderer from '/components/Renderer'
 import Timeline from '/components/Timeline'
 import Toolbar from '/components/Toolbar'
-import Splashscreen from '/components/Splashscreen'
 
 export default class App extends Component {
   template (props) {
     return (
-      <main class='app'>
-        <Splashscreen />
+      <main class='app' store-data-view-mode={Store.app.viewMode}>
         <Toolbar />
         <div class='app__main'>
-          <Drawer store-disabled={d(Store.mode, m => m !== 'draw')} />
-          <Paster store-disabled={d(Store.mode, m => m !== 'paste')} />
+          <Drawer store-disabled={d(Store.app.drawMode, m => m !== 'draw')} />
+          <Paster store-disabled={d(Store.app.drawMode, m => m !== 'paste')} />
           <Renderer />
         </div>
         <Timeline />

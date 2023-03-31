@@ -16,35 +16,20 @@ export default class Canvas extends Component {
   }
 
   afterMount () {
-    const dpr = this.state.dpr.get()
-    this.handleResize()
     this.context = this.refs.canvas.getContext('2d')
-    this.context.scale(dpr, dpr)
-
-    window.addEventListener('resize', debounce(this.handleResize, 200))
+    this.handleResize()
+    window.addEventListener('resize', debounce(this.handleResize, 100))
   }
 
   clear () {
     this.context.clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height)
   }
 
-  // TODO handle screen resize
   handleResize () {
-    const pwidth = this.refs.canvas.width
-    const pheight = this.refs.canvas.height
-
-    // Update size
     const dpr = this.state.dpr.get()
     const { width, height } = this.refs.canvas.getBoundingClientRect()
     this.refs.canvas.width = width * dpr
     this.refs.canvas.height = height * dpr
-
-    // WIP Center exising
-    const dw = pwidth - this.refs.canvas.width
-    const dh = pheight - this.refs.canvas.height
-    if (this.context) {
-      this.log([dw, dh])
-      this.context.translate(dw, dh)
-    }
+    this.context.scale(dpr, dpr)
   }
 }

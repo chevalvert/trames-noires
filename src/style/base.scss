@@ -9,12 +9,26 @@ body {
   background: var(--color-background);
 }
 
+::selection {
+  color: var(--color-background);
+  background: #FFEC27;
+}
+
+a {
+  color: #29ADFF;
+  text-decoration: none;
+}
+
 main {
   isolation: isolate;
 }
 
 input, button {
   -webkit-tap-highlight-color: transparent;
+}
+
+pre {
+  font-family: var(--font-family-mono);
 }
 
 fieldset {
@@ -24,19 +38,16 @@ fieldset {
   &.group {
     gap: unset;
 
-    .button[disabled],
-    .button.is-disabled {
-      opacity: 1;
-      & > * { opacity: 0.3; }
-    }
-
-    .button:not(:last-child) {
+    & > *:not(:last-child),
+    & > *:not(:last-child) .button {
       border-right: 0;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
 
-    .button + input {
+    .button + input,
+    .switcher + .switcher .button,
+    .button:not([hidden]) + .button {
       border-left-style: dashed;
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
@@ -49,7 +60,6 @@ fieldset {
   path { stroke: none; }
 }
 
-.disc-small svg { transform: scale(0.25); }
-.disc-medium svg { transform: scale(0.7); }
-.disc-large svg { transform: scale(1.2); }
-
+.disc-small svg { transform: scale(0.5); }
+.disc-medium svg { transform: scale(1); }
+.disc-large svg { transform: scale(1.5); }

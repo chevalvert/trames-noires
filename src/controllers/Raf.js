@@ -19,4 +19,10 @@ export function stop () {
   raf.remove(tick)
 }
 
-export default { start, stop }
+export function toggle () {
+  Store.raf.isRunning.update(v => !v)
+  if (Store.raf.isRunning.get()) start()
+  else stop()
+}
+
+export default { start, stop, toggle }

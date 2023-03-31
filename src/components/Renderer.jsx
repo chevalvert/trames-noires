@@ -18,7 +18,8 @@ export default class Renderer extends Component {
   }
 
   afterRender () {
-    Store.lines.subscribe(this.handleTick)
+    Store.app.lines.subscribe(this.handleTick)
+    Store.app.viewMode.subscribe(this.handleTick)
     Store.raf.frameCount.subscribe(this.handleTick)
   }
 
@@ -26,24 +27,29 @@ export default class Renderer extends Component {
     this.refs.canvas.clear()
 
     const frame = Store.raf.frameCount.get()
+    const viewMode = Store.app.viewMode.get()
     const { context } = this.refs.canvas
 
-    for (const line of Store.lines.get()) {
+    for (const line of Store.app.lines.get()) {
       // Draw dashed ghost
-      line.render(context, undefined, {
-        style: {
-          lineWidth: 2,
-          strokeStyle: 'rgba(255 255 255 / 50%)',
-          lineDash: [10, 10]
-        }
-      })
+      if (viewMode === 'wireframe' && line.fillMode !== 'AB') {
+        line.render(context, {
+          fillMode: 'AB',
+          style: {
+            lineWidth: 2,
+            strokeStyle: 'rgba(255 255 255 / 50%)',
+            lineDash: [10, 10]
+          }
+        })
+      }
 
       // Draw current line
-      line.render(context, frame, { smoothed: true })
+      line.render(context, { frame, smoothed: true })
 
       // Draw debug in test env
       if (import.meta.env.MODE === 'test') {
-        line.render(context, frame, {
+        line.render(context, {
+          frame,
           smoothed: false,
           style: { strokeStyle: 'red' }
         })
