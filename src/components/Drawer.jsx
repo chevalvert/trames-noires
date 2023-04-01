@@ -76,7 +76,6 @@ export default class Drawer extends Component {
   }
 
   handlePointerMove (e) {
-    this.log('move')
     if (!this.state.penDown.get()) return
 
     Raf.start()
