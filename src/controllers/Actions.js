@@ -11,12 +11,12 @@ const nanoid = customAlphabet('0123456789ABCDEF', 6)
 export async function clear ({ force = false } = {}) {
   if (!force && !(await Modal.confirm('Tout effacer ?'))) return
   Store.app.lines.set([])
-  Store.app.drawMode.set('draw')
+  Store.app.inputMode.set('draw')
 }
 
 export function undo () {
   Store.app.lines.update(lines => lines.slice(0, lines.length - 1), true)
-  if (!Store.app.lines.current.length) Store.app.drawMode.set('draw')
+  if (!Store.app.lines.current.length) Store.app.inputMode.set('draw')
 }
 
 export async function save () {

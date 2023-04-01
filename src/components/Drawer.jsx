@@ -69,6 +69,7 @@ export default class Drawer extends Component {
 
     const line = new Line({
       firstFrame: Store.raf.frameCount.get(),
+      drawMode: Store.app.drawMode.get(),
       fillMode: Store.app.fillMode.get(),
       style: Store.app.style.get()
     })

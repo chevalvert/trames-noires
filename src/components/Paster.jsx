@@ -40,6 +40,7 @@ export default class Drawer extends Component {
       points: lastLine.points.map(([x, y]) => [x - dx, y - dy]),
       firstFrame: Store.raf.frameCount.get(),
       style: Object.assign({}, lastLine.style, Store.app.style.current),
+      drawMode: Store.app.drawMode.get(),
       fillMode: Store.app.fillMode.get()
     })
 

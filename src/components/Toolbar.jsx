@@ -27,7 +27,7 @@ export default class Toolbar extends Component {
       <section class='toolbar'>
         <fieldset>
           <Switcher
-            store-value={Store.app.drawMode}
+            store-value={Store.app.inputMode}
             values={[
               { icon: IconDraw, label: 'Dessin', value: 'draw', 'store-disabled': state.hasNoLines },
               { icon: IconPaste, label: 'Tampon', value: 'paste' }
@@ -35,6 +35,11 @@ export default class Toolbar extends Component {
           />
 
           <fieldset class='group'>
+            <Switcher
+              store-value={Store.app.drawMode}
+              values={Store.DRAW_MODES.get()}
+            />
+
             <Switcher
               values={Store.LINE_WIDTHS.get().map(({ name, value }) => ({
                 value,

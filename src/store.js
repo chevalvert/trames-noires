@@ -3,6 +3,8 @@ import { r, w } from '/utils/state'
 import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
 import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
+import IconPencil from 'iconoir/icons/edit-pencil.svg?raw'
+import IconFreehand from 'iconoir/icons/design-nib.svg?raw'
 
 const Store = {
   AA_AB_FILL_MODE_LENGTH: r(3),
@@ -39,8 +41,14 @@ const Store = {
     { value: 'no-ui', icon: IconNoUI }
   ]),
 
+  DRAW_MODES: r([
+    { value: 'smooth', icon: IconPencil },
+    { value: 'freehand', icon: IconFreehand }
+  ]),
+
   app: {
-    drawMode: w('draw'), // draw|paste
+    drawMode: w('freehand'), // smooth|freehand
+    inputMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
     viewMode: w('wireframe'), // wireframe|preview|no-ui
 

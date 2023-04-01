@@ -35,6 +35,7 @@ export default class Renderer extends Component {
       if (viewMode === 'wireframe' && line.fillMode !== 'AB') {
         line.render(context, {
           fillMode: 'AB',
+          drawMode: 'smooth',
           style: {
             lineWidth: 2,
             strokeStyle: 'rgba(255 255 255 / 50%)',

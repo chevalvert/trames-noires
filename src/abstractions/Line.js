@@ -1,14 +1,17 @@
+import { getStroke } from 'perfect-freehand'
 import smooth from 'chaikin-smooth'
 import Store from '/store'
 
 export default class Line {
   constructor ({
     points = [],
+    drawMode = 'raw', // raw|smooth|freehand
     fillMode = 'AA→AB',
     firstFrame = 0,
     style = {}
   } = {}) {
     this.points = points
+    this.drawMode = drawMode
     this.fillMode = fillMode
     this.firstFrame = firstFrame
     this.style = style
@@ -24,7 +27,7 @@ export default class Line {
 
   render (context, {
     frame = Number.POSITIVE_INFINITY,
-    smoothed = true,
+    drawMode = this.drawMode,
     fillMode = this.fillMode,
     style = this.style,
     preferSprite = true
@@ -37,7 +40,7 @@ export default class Line {
     // Try to use a sprite on AB lines
     if (fillMode === 'AB' && preferSprite) {
       if (!this.sprite) {
-        this.sprite = this.toSprite(context, { smoothed, fillMode, style })
+        this.sprite = this.toSprite(context, { drawMode, fillMode, style })
       }
       context.drawImage(this.sprite, 0, 0)
       context.restore()
@@ -77,9 +80,19 @@ export default class Line {
     }
 
     // Slice the points before smoothing to ensure correct time sync
-    const points = smoothed
-      ? smooth(this.points.slice(bounds[0], bounds[1]))
-      : this.points.slice(bounds[0], bounds[1])
+    const points = (() => {
+      const points = this.points.slice(bounds[0], bounds[1])
+      if (drawMode === 'smooth') return smooth(points)
+      if (drawMode === 'freehand') {
+        return getStroke(smooth(points), {
+          size: style.lineWidth * 1.5,
+          thinning: 0.5,
+          smoothing: 0.01,
+          streamline: 0.6
+        })
+      }
+      return points
+    })()
 
     // Draw line
     for (let index = 0; index < points.length; index++) {
@@ -88,7 +101,11 @@ export default class Line {
       context[index ? 'lineTo' : 'moveTo'](point[0], point[1])
     }
 
-    context.stroke()
+    if (drawMode === 'freehand') {
+      context.fillStyle = context.strokeStyle
+      context.fill()
+    } else context.stroke()
+
     context.restore()
   }
 
@@ -104,6 +121,7 @@ export default class Line {
   toJSON () {
     return {
       points: this.points,
+      drawMode: this.drawMode,
       fillMode: this.fillMode,
       firstFrame: this.firstFrame,
       style: this.style
