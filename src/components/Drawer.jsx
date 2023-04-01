@@ -12,9 +12,9 @@ export default class Drawer extends Component {
   beforeRender (props) {
     this.update = this.update.bind(this)
     this.handleTick = this.handleTick.bind(this)
-    this.handlePenDown = this.handlePenDown.bind(this)
-    this.handlePenMove = this.handlePenMove.bind(this)
-    this.handlePenUp = this.handlePenUp.bind(this)
+    this.handlePointerDown = this.handlePointerDown.bind(this)
+    this.handlePointerMove = this.handlePointerMove.bind(this)
+    this.handlePointerUp = this.handlePointerUp.bind(this)
 
     this.state = {
       isDisabled: props['store-disabled'] || w(props.disabled),
@@ -31,10 +31,9 @@ export default class Drawer extends Component {
         class='drawer'
         store-class-has-pen-down={state.penDown}
         store-class-is-disabled={state.isDisabled}
-        event-touchstart={this.handlePenDown}
-        event-mousedown={this.handlePenDown}
-        event-touchend={this.handlePenUp}
-        event-mouseup={this.handlePenUp}
+        event-pointerDown={this.handlePointerDown}
+        event-pointerMove={this.handlePointerMove}
+        event-pointerUp={this.handlePointerUp}
       >
         <Canvas ref={this.ref('canvas')} />
       </section>
@@ -42,10 +41,6 @@ export default class Drawer extends Component {
   }
 
   afterRender () {
-    document.body.addEventListener('mouseleave', this.handlePenUp)
-    document.body.addEventListener('touchmove', e => window.requestAnimationFrame(() => this.handlePenMove(e)))
-    document.body.addEventListener('mousemove', e => window.requestAnimationFrame(() => this.handlePenMove(e)))
-
     this.state.line.subscribe(this.update)
     Store.raf.frameCount.subscribe(this.handleTick)
   }
@@ -63,7 +58,9 @@ export default class Drawer extends Component {
     })
   }
 
-  handlePenDown (e) {
+  handlePointerDown (e) {
+    this.base.setPointerCapture(e.pointerId)
+
     this.state.penDown.set(true)
     this.state.penPosition.set(pointer(e))
 
@@ -77,7 +74,7 @@ export default class Drawer extends Component {
     this.state.line.set(line)
   }
 
-  handlePenMove (e) {
+  handlePointerMove (e) {
     if (!this.state.penDown.get()) return
 
     Raf.start()
@@ -92,7 +89,7 @@ export default class Drawer extends Component {
 
     // Force pen up when overflowing timeline
     if (line.firstFrame + line.points.length >= Store.raf.maxDuration.get()) {
-      this.handlePenUp()
+      this.handlePointerUp()
       return
     }
 
@@ -102,7 +99,8 @@ export default class Drawer extends Component {
     }, true)
   }
 
-  handlePenUp (e) {
+  handlePointerUp (e) {
+    if (e) this.base.releasePointerCapture(e.pointerId)
     this.state.penDown.set(false)
 
     const line = this.state.line.get()
