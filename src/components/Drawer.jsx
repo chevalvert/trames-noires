@@ -34,6 +34,7 @@ export default class Drawer extends Component {
         event-pointerDown={this.handlePointerDown}
         event-pointerMove={this.handlePointerMove}
         event-pointerUp={this.handlePointerUp}
+        style='touch-action: none'
       >
         <Canvas ref={this.ref('canvas')} />
       </section>
@@ -75,6 +76,7 @@ export default class Drawer extends Component {
   }
 
   handlePointerMove (e) {
+    this.log('move')
     if (!this.state.penDown.get()) return
 
     Raf.start()
