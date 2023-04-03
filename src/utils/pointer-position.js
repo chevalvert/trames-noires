@@ -6,5 +6,7 @@ export default e => {
     return touch ? [touch.clientX, touch.clientY] : [-1, -1]
   }
 
-  return [e.clientX, e.clientY]
+  return e.pointerType === 'pen'
+    ? [e.clientX, e.clientY, e.pressure]
+    : [e.clientX, e.clientY]
 }

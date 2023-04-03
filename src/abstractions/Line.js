@@ -82,9 +82,13 @@ export default class Line {
     // Slice the points before smoothing to ensure correct time sync
     const points = (() => {
       const points = this.points.slice(bounds[0], bounds[1])
+      if (!points || !points.length) return []
+
       if (drawMode === 'smooth') return smooth(points)
       if (drawMode === 'freehand') {
-        return getStroke(smooth(points), {
+        // Smooth only when no pressure data
+        const pts = points[0][2] !== undefined ? points : smooth(points)
+        return getStroke(pts, {
           size: style.lineWidth * 1.5,
           thinning: 0.5,
           smoothing: 0.01,
