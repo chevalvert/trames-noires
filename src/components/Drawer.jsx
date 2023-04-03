@@ -79,7 +79,13 @@ export default class Drawer extends Component {
   handlePenMove (e) {
     if (!this.state.penDown.get()) return
 
-    Raf.start()
+    // Manually tick in AB mode to avoid triggering the whole animation logic
+    if (Store.app.fillMode.get() !== 'AB') Raf.start()
+    else {
+      Raf.stop()
+      window.requestAnimationFrame(this.handleTick)
+    }
+
     this.state.penPosition.set(pointer(e))
   }
 

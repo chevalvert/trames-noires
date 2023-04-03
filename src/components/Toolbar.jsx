@@ -60,9 +60,9 @@ export default class Toolbar extends Component {
           </fieldset>
 
           <Switcher
-            values={Store.FILL_MODES.get().map(({ value }) => ({
+            values={Store.FILL_MODES.get().map(({ value, icon }) => ({
               value,
-              icon: IconFillMode,
+              icon: icon || IconFillMode,
               // TODO use animated icon instead of using label
               label: value.replace(/(→)/g, '&thinsp;$1&thinsp;')
             }))}

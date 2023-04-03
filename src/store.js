@@ -3,6 +3,7 @@ import { r, w } from '/utils/state'
 import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
 import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
+import IconNoTime from 'iconoir/icons/timer-off.svg?raw'
 
 const Store = {
   AA_AB_FILL_MODE_LENGTH: r(3),
@@ -30,7 +31,7 @@ const Store = {
     { value: 'AA→AB' },
     { value: 'AA→BB' },
     { value: 'AA→AB→BB' },
-    { value: 'AB' }
+    { value: 'AB', icon: IconNoTime }
   ]),
 
   VIEW_MODES: r([
