@@ -96,7 +96,7 @@ export default class Drawer extends Component {
     if (!line) return
 
     // Force pen up when overflowing timeline
-    if (line.firstFrame + line.points.length >= Store.raf.maxDuration.get()) {
+    if (line.fillMode !== 'AB' && line.firstFrame + line.points.length >= Store.raf.maxDuration.get()) {
       this.handlePenUp()
       return
     }
