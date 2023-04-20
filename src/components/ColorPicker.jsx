@@ -48,6 +48,6 @@ export default class ColorPicker extends Component {
     if (color) this.base.style.setProperty('--color', color)
     else this.base.style.removeProperty('--color')
 
-    ;(this.props['event-change'] || noop)(color)
+    ;(this.props['event-change'] || noop)(color || 'white')
   }
 }
