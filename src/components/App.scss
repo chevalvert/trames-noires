@@ -6,6 +6,10 @@
   width: 100%;
   height: 100%;
 
+  .drawer {
+    z-index: 1;
+  }
+
   .paster, .drawer, .renderer, .canvas {
     position: fixed;
     inset: 0;
