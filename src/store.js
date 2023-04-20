@@ -1,10 +1,13 @@
-import { r, w } from '/utils/state'
+import { r, w, localStored } from '/utils/state'
+
+import Line from '/abstractions/Line'
 
 import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
 import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
 import IconPencil from 'iconoir/icons/edit-pencil.svg?raw'
 import IconFreehand from 'iconoir/icons/design-nib.svg?raw'
+import IconNoTime from 'iconoir/icons/timer-off.svg?raw'
 
 const Store = {
   AA_AB_FILL_MODE_LENGTH: r(3),
@@ -32,7 +35,7 @@ const Store = {
     { value: 'AA→AB' },
     { value: 'AA→BB' },
     { value: 'AA→AB→BB' },
-    { value: 'AB' }
+    { value: 'AB', icon: IconNoTime }
   ]),
 
   VIEW_MODES: r([
@@ -47,12 +50,17 @@ const Store = {
   ]),
 
   app: {
+    proMode: r(window.location.pathname === '/pro'),
     drawMode: w('freehand'), // smooth|freehand
     inputMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
     viewMode: w('wireframe'), // wireframe|preview|no-ui
 
-    lines: w([]),
+    lines: localStored('app.lines', [], {
+      encode: lines => JSON.stringify(lines.map(line => line.toJSON())),
+      decode: lines => JSON.parse(lines || '[]').map(line => new Line(line))
+    }),
+
     style: w({
       lineWidth: 10,
       strokeStyle: 'white',
@@ -63,7 +71,7 @@ const Store = {
 
   raf: {
     fps: r(60),
-    maxDuration: r(60 * 5),
+    maxDuration: w(60 * 5),
     isRunning: w(false),
     frameCount: w(0)
   },

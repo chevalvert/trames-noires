@@ -11,6 +11,7 @@
   cursor: pointer;
 
   align-items: center;
+  justify-content: center;
 
   background: var(--color-background);
   border: 1px solid currentcolor;
@@ -31,7 +32,6 @@
   }
 
   &__icon {
-    margin: 0 auto;
     animation: button 120ms ease-out;
   }
 

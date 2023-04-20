@@ -73,6 +73,11 @@
     font-size: clamp(3rem, 15vw, 50rem);
   }
 
+  &__content .input {
+    padding: unset;
+    border: unset;
+  }
+
   &__content > footer {
     display: flex;
     padding-top: var(--gutter);
@@ -80,6 +85,10 @@
     margin-top: 0;
 
     gap: var(--gutter-internal);
+
+    fieldset, .button {
+      width: 100%;
+    }
 
     .button {
       border-bottom: 0;

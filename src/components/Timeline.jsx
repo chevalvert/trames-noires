@@ -4,6 +4,7 @@ import { Component } from '/utils/jsx'
 
 import Store from '/store'
 import Button from '/components/Button'
+import Input from '/components/Input'
 
 import Actions from '/controllers/Actions'
 import Raf from '/controllers/Raf'
@@ -36,10 +37,32 @@ export default class Timeline extends Component {
             type='range'
             ref={this.ref('input')}
             event-input={this.handleChange}
+            event-focus={e => e.target.blur()}
             step='1'
             store-value={Store.raf.frameCount}
             store-max={Store.raf.maxDuration}
           />
+
+          {Store.app.proMode.get() && [
+            <Input
+              type='number'
+              size='auto'
+              store-value={Store.raf.frameCount}
+              after='/'
+              min={0}
+              style='gap: var(--gutter-internal)'
+              store-max={Store.raf.maxDuration}
+            />,
+            <Input
+              type='number'
+              size='auto'
+              style='border-left: 0; padding-left: 0'
+              store-value={Store.raf.maxDuration}
+              min={Store.raf.fps.get()}
+              after='&nbsp;frames'
+              max={10_000}
+            />
+          ]}
         </fieldset>
 
         <Button

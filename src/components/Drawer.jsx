@@ -54,8 +54,7 @@ export default class Drawer extends Component {
 
     line.render(this.refs.canvas.context, {
       frame: Store.raf.frameCount.get(),
-      fillMode: 'AB',
-      preferSprite: false
+      fillMode: 'AB'
     })
   }
 
@@ -78,7 +77,13 @@ export default class Drawer extends Component {
   handlePointerMove (e) {
     if (!this.state.penDown.get()) return
 
-    Raf.start()
+    // Manually tick in AB mode to avoid triggering the whole animation logic
+    if (Store.app.fillMode.get() !== 'AB') Raf.start()
+    else {
+      Raf.stop()
+      window.requestAnimationFrame(this.handleTick)
+    }
+
     this.state.penPosition.set(pointer(e))
   }
 
@@ -89,7 +94,7 @@ export default class Drawer extends Component {
     if (!line) return
 
     // Force pen up when overflowing timeline
-    if (line.firstFrame + line.points.length >= Store.raf.maxDuration.get()) {
+    if (line.fillMode !== 'AB' && line.firstFrame + line.points.length >= Store.raf.maxDuration.get()) {
       this.handlePointerUp()
       return
     }

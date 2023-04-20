@@ -44,7 +44,7 @@ export default class Drawer extends Component {
       fillMode: Store.app.fillMode.get()
     })
 
-    Raf.start()
+    if (Store.app.fillMode.get() !== 'AB') Raf.start()
 
     // Transfer line to Store
     Store.app.lines.update(lines => {
