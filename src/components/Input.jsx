@@ -6,8 +6,8 @@ import classnames from 'classnames'
 
 export default class Input extends Component {
   beforeRender (props) {
-    this.handleInput = this.handleInput.bind(this)
-    this.handleValue = this.handleValue.bind(this)
+    this.update = this.update.bind(this)
+    this.handleChange = this.handleChange.bind(this)
 
     this.state = {
       label: props['store-label'] || r(props.label),
@@ -39,7 +39,8 @@ export default class Input extends Component {
         {props.label && <label innerHTML={props.label} />}
         <input
           ref={this.ref('input')}
-          event-input={this.handleInput}
+          event-input={this.update}
+          event-change={this.handleChange}
           type={props.type}
           size={props.size}
           store-value={state.value}
@@ -55,18 +56,18 @@ export default class Input extends Component {
   }
 
   afterMount () {
-    this.state.value.subscribe(this.handleValue)
-    this.handleValue()
+    this.state.value.subscribe(this.update)
+    this.update()
   }
 
-  handleValue () {
+  update () {
     if (this.props.size === 'auto') {
-      const length = (String(this.state.value.get()) || '').length || (this.props.placeholder || '').length || 1
+      const length = (String(this.refs.input.value) || '').length || (this.props.placeholder || '').length || 1
       this.refs.input.style.width = length + 'ch'
     }
   }
 
-  handleInput () {
+  handleChange () {
     if (this.props.min !== undefined && this.refs.input.value < this.props.min) {
       this.refs.input.value = this.props.min
     }
