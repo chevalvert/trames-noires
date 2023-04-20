@@ -2,7 +2,8 @@
 
 import { getStroke } from 'perfect-freehand'
 import smooth from 'chaikin-smooth'
-import Store from '/store'
+
+const AA_AB_FILL_MODE_LENGTH = 3
 
 function pathData (points, { isStroke = false } = {}) {
   if (points.length <= 1) return ''
@@ -74,7 +75,7 @@ export default class Line {
         break
 
       case 'AA→BB':
-        bounds[0] = Math.max(0, frame - this.firstFrame - Store.AA_AB_FILL_MODE_LENGTH.get())
+        bounds[0] = Math.max(0, frame - this.firstFrame - AA_AB_FILL_MODE_LENGTH)
         bounds[1] = frame - this.firstFrame
         break
 

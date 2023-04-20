@@ -11,8 +11,6 @@ import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
 import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 
 const Store = {
-  AA_AB_FILL_MODE_LENGTH: r(3), // TODO move in const in Line (prepare for shared)
-
   INPUT_MODES: r([
     { icon: IconPencil, label: 'Dessin', value: 'draw' },
     { icon: IconPaste, label: 'Tampon', value: 'paste' }
