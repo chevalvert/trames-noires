@@ -27,6 +27,10 @@ class Signal {
     }
   }
 
+  trigger () {
+    this.dispatch(this.current)
+  }
+
   subscribe (fn, ctx, once) {
     const node = new SignalListener(this, fn, ctx, once)
     if (!this._first) {

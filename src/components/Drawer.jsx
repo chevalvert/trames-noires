@@ -58,8 +58,7 @@ export default class Drawer extends Component {
 
     line.render(this.refs.canvas.context, {
       frame: Store.raf.frameCount.get(),
-      fillMode: 'AB',
-      preferSprite: false
+      fillMode: 'AB'
     })
   }
 

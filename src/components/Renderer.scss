@@ -1,3 +1,26 @@
 .renderer {
+  position: relative;
   pointer-events: none;
+
+  svg {
+    @include debug;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ghost {
+    stroke: rgba(255 255 255 / 50%);
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+
+    stroke-dasharray: 10 10;
+
+    .app:not([data-view-mode='wireframe']) & {
+      display: none;
+    }
+  }
 }

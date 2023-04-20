@@ -18,6 +18,13 @@ export default class Line {
     return !this.points || !this.points.length
   }
 
+  get pathData () {
+    if (!this._pathData) {
+      this._pathData = ['M', this.points[0], 'L', this.points.slice(1)].join(' ')
+    }
+    return this._pathData
+  }
+
   push (point) {
     this.points.push(point)
   }
@@ -26,24 +33,12 @@ export default class Line {
     frame = Number.POSITIVE_INFINITY,
     smoothed = true,
     fillMode = this.fillMode,
-    style = this.style,
-    preferSprite = true
+    style = this.style
   } = {}) {
     if (this.isEmpty) return
     if (frame < this.firstFrame && fillMode !== 'AB') return
 
     context.save()
-
-    // Try to use a sprite on AB lines
-    if (fillMode === 'AB' && preferSprite) {
-      if (!this.sprite) {
-        this.sprite = this.toSprite(context, { smoothed, fillMode, style })
-      }
-      context.drawImage(this.sprite, 0, 0)
-      context.restore()
-      return
-    }
-
     context.beginPath()
 
     // Apply style
@@ -90,15 +85,6 @@ export default class Line {
 
     context.stroke()
     context.restore()
-  }
-
-  toSprite (context, options) {
-    const canvas = document.createElement('canvas')
-    canvas.width = context.canvas.width
-    canvas.height = context.canvas.height
-
-    this.render(canvas.getContext('2d'), { ...options, preferSprite: false })
-    return canvas
   }
 
   toJSON () {
