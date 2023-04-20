@@ -47,23 +47,26 @@ export default class Toolbar extends Component {
               }}
             />
 
-            <Switcher
-              values={Store.COLORS.get().map(({ label, value }) => ({
-                value,
-                icon: IconCircle,
-                class: 'disc',
-                style: `--color: ${value}`
-              }))}
-              event-change={value => {
-                Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
-              }}
-            />
+            {(
+              Store.app.proMode.get()
+                ? <ColorPicker
+                    event-change={value => {
+                      Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
+                    }}
+                  />
+                : <Switcher
+                    values={Store.COLORS.get().map(({ label, value }) => ({
+                      value,
+                      icon: IconCircle,
+                      class: 'disc',
+                      style: `--color: ${value}`
+                    }))}
+                    event-change={value => {
+                      Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
+                    }}
+                  />
+            )}
 
-            <ColorPicker
-              event-change={value => {
-                Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
-              }}
-            />
           </fieldset>
 
           <Switcher

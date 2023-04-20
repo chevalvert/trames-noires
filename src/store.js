@@ -43,6 +43,7 @@ const Store = {
   ]),
 
   app: {
+    proMode: r(window.location.pathname === '/pro'),
     drawMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
     viewMode: w('wireframe'), // wireframe|preview|no-ui

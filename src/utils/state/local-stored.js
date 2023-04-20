@@ -2,7 +2,7 @@
 
 import writable from '/utils/state/writable'
 
-const NS = `${__NAME__}@${__VERSION__}/${window.location.pathname}__`
+const NS = `${__NAME__}@${__VERSION__}/`
 
 function localStored (key, initialValue, {
   encode = JSON.stringify,
