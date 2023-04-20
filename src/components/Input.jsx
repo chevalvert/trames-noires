@@ -76,6 +76,8 @@ export default class Input extends Component {
       this.refs.input.value = this.props.max
     }
 
-    this.state.value.set(this.refs.input.value)
+    this.state.value.set(this.refs.input.type === 'number'
+      ? +this.refs.input.value
+      : this.refs.input.value)
   }
 }
