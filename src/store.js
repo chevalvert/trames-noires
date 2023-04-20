@@ -2,21 +2,27 @@ import { r, w, localStored } from '/utils/state'
 
 import Line from '/abstractions/Line'
 
-import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
-import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
-import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
-import IconPencil from 'iconoir/icons/edit-pencil.svg?raw'
 import IconFreehand from 'iconoir/icons/design-nib.svg?raw'
 import IconNoTime from 'iconoir/icons/timer-off.svg?raw'
+import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
+import IconPaste from 'iconoir/icons/keyframes.svg?raw'
+import IconPencil from 'iconoir/icons/edit-pencil.svg?raw'
+import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
+import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 
 const Store = {
-  AA_AB_FILL_MODE_LENGTH: r(3),
+  AA_AB_FILL_MODE_LENGTH: r(3), // TODO move in const in Line (prepare for shared)
 
-  LINE_WIDTHS: r([
-    { value: 10, name: 'medium' },
-    { value: 20, name: 'large' },
-    { value: 5, name: 'small' }
+  INPUT_MODES: r([
+    { icon: IconPencil, label: 'Dessin', value: 'draw' },
+    { icon: IconPaste, label: 'Tampon', value: 'paste' }
   ]),
+
+  LINE_WIDTHS: r({
+    medium: { lineWidth: 10, perfectFreehand: { size: 15, thinning: 0.65, smoothing: 0.77, streamline: 0.6 } },
+    large: { lineWidth: 20, perfectFreehand: { size: 30, thinning: 0.8, smoothing: 0.77, streamline: 0.6 } },
+    small: { lineWidth: 5, perfectFreehand: { size: 7.5, thinning: 0.5, smoothing: 0.01, streamline: 0.6 } }
+  }),
 
   COLORS: r([
     // Thanks Pico8 !
@@ -51,10 +57,11 @@ const Store = {
 
   app: {
     proMode: r(window.location.pathname === '/pro'),
-    drawMode: w('freehand'), // smooth|freehand
+
     inputMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
     viewMode: w('wireframe'), // wireframe|preview|no-ui
+    drawMode: w('smooth'), // raw|smooth|freehand
 
     lines: localStored('app.lines', [], {
       encode: lines => JSON.stringify(lines.map(line => line.toJSON())),

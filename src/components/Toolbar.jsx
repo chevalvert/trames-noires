@@ -11,8 +11,6 @@ import Actions from '/controllers/Actions'
 
 import IconCircle from 'iconoir/icons/circle.svg?raw'
 import IconClear from 'iconoir/icons/trash.svg?raw'
-import IconDraw from 'iconoir/icons/edit-pencil.svg?raw'
-import IconPaste from 'iconoir/icons/keyframes.svg?raw'
 import IconUndo from 'iconoir/icons/undo.svg?raw'
 import IconFillMode from 'iconoir/icons/timer.svg?raw'
 
@@ -28,27 +26,27 @@ export default class Toolbar extends Component {
       <section class='toolbar'>
         <fieldset>
           <Switcher
+            store-disabled={state.hasNoLines}
             store-value={Store.app.inputMode}
-            values={[
-              { icon: IconDraw, label: 'Dessin', value: 'draw', 'store-disabled': state.hasNoLines },
-              { icon: IconPaste, label: 'Tampon', value: 'paste' }
-            ]}
+            values={Store.INPUT_MODES.get()}
           />
 
           <fieldset class='group'>
-            <Switcher
-              store-value={Store.app.drawMode}
-              values={Store.DRAW_MODES.get()}
-            />
+            {Store.app.proMode.get() && (
+              <Switcher
+                store-value={Store.app.drawMode}
+                values={Store.DRAW_MODES.get()}
+              />
+            )}
 
             <Switcher
-              values={Store.LINE_WIDTHS.get().map(({ name, value }) => ({
+              values={Object.entries(Store.LINE_WIDTHS.get()).map(([name, value]) => ({
                 value,
                 icon: IconCircle,
                 class: `disc disc-${name}`
               }))}
               event-change={value => {
-                Store.app.style.update(style => ({ ...style, lineWidth: value }), true)
+                Store.app.style.update(style => ({ ...style, ...value }), true)
               }}
             />
 
