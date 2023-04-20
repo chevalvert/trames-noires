@@ -54,7 +54,7 @@ const Store = {
   ]),
 
   app: {
-    proMode: r(window.location.pathname === '/pro'),
+    proMode: r(new URLSearchParams(window.location.search).has('pro')),
 
     inputMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB

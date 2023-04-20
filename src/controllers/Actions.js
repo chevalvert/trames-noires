@@ -23,7 +23,9 @@ export async function save () {
   const lines = Store.app.lines.current.map(line => line.toJSON())
   try {
     const { uid } = await Api.export(lines, nanoid())
-    Modal.bigText(uid, { url: window.location.origin + (window.location.path || '/') + '?uid=' + uid })
+    const url = new URL(window.location)
+    url.searchParams.append('uid', uid)
+    Modal.bigText(uid, { url })
   } catch (error) {
     Modal.error(error)
   }
