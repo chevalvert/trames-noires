@@ -7,13 +7,7 @@
 
   place-items: center;
 
-  cursor: pointer;
-
   background: var(--color-background);
-
-  &:not(.is-clickable) {
-    pointer-events: none;
-  }
 
   &__content {
     display: flex;

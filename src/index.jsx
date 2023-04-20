@@ -17,11 +17,11 @@ const uid = new URLSearchParams(window.location.search).get('uid')
   Api.polling.start()
 
   if (uid) {
-    const { components } = render(<Splashscreen text='Chargement…' clickable={false} />)
+    const { components } = render(<Splashscreen loading />)
     await Actions.load(uid)
     components[0].destroy()
   } else {
-    if (import.meta.env.PROD) render(<Splashscreen />)
+    if (import.meta.env.MODE === 'production') render(<Splashscreen />)
   }
 
   render(<App />)
