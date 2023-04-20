@@ -1,4 +1,6 @@
-import { r, w } from '/utils/state'
+import { r, w, localStored } from '/utils/state'
+
+import Line from '/abstractions/Line'
 
 import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
@@ -45,7 +47,11 @@ const Store = {
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
     viewMode: w('wireframe'), // wireframe|preview|no-ui
 
-    lines: w([]),
+    lines: localStored('app.lines', [], {
+      encode: lines => JSON.stringify(lines.map(line => line.toJSON())),
+      decode: lines => JSON.parse(lines || '[]').map(line => new Line(line))
+    }),
+
     style: w({
       lineWidth: 10,
       strokeStyle: 'white',

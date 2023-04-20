@@ -23,6 +23,10 @@ export default class Renderer extends Component {
     Store.raf.frameCount.subscribe(this.handleTick)
   }
 
+  afterMount () {
+    this.handleTick()
+  }
+
   handleTick () {
     this.refs.canvas.clear()
 
