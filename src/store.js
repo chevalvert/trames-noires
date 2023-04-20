@@ -78,7 +78,7 @@ const Store = {
 
   raf: {
     fps: r(60),
-    maxDuration: w(60 * 5),
+    maxDuration: localStored('raf.maxDuration', 60 * 5),
     isRunning: w(false),
     frameCount: w(0)
   },
