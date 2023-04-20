@@ -1,0 +1,13 @@
+.color-picker {
+  .button__icon svg {
+    fill: var(--color, var(--color-text));
+    path { stroke: none; }
+  }
+
+  input[type='color'] {
+    all: unset;
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+  }
+}

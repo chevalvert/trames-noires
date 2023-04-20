@@ -4,6 +4,7 @@ import { Component } from '/utils/jsx'
 
 import Store from '/store'
 import Button from '/components/Button'
+import ColorPicker from '/components/ColorPicker'
 import Switcher from '/components/Switcher'
 
 import Actions from '/controllers/Actions'
@@ -53,6 +54,12 @@ export default class Toolbar extends Component {
                 class: 'disc',
                 style: `--color: ${value}`
               }))}
+              event-change={value => {
+                Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
+              }}
+            />
+
+            <ColorPicker
               event-change={value => {
                 Store.app.style.update(style => ({ ...style, strokeStyle: value }), true)
               }}
