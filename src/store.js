@@ -5,6 +5,8 @@ import Line from '/abstractions/Line'
 import IconWireframeOn from 'iconoir/icons/eye-empty.svg?raw'
 import IconWireframeOff from 'iconoir/icons/eye-off.svg?raw'
 import IconNoUI from 'iconoir/icons/eye-close.svg?raw'
+import IconPencil from 'iconoir/icons/edit-pencil.svg?raw'
+import IconFreehand from 'iconoir/icons/design-nib.svg?raw'
 import IconNoTime from 'iconoir/icons/timer-off.svg?raw'
 
 const Store = {
@@ -42,9 +44,15 @@ const Store = {
     { value: 'no-ui', icon: IconNoUI }
   ]),
 
+  DRAW_MODES: r([
+    { value: 'smooth', icon: IconPencil },
+    { value: 'freehand', icon: IconFreehand }
+  ]),
+
   app: {
     proMode: r(window.location.pathname === '/pro'),
-    drawMode: w('draw'), // draw|paste
+    drawMode: w('freehand'), // smooth|freehand
+    inputMode: w('draw'), // draw|paste
     fillMode: w('AA→AB'), // AB|AA→AB|AA→AB→BB|AA→BB
     viewMode: w('wireframe'), // wireframe|preview|no-ui
 

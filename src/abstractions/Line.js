@@ -1,14 +1,17 @@
+import { getStroke } from 'perfect-freehand'
 import smooth from 'chaikin-smooth'
 import Store from '/store'
 
 export default class Line {
   constructor ({
     points = [],
+    drawMode = 'raw', // raw|smooth|freehand
     fillMode = 'AA→AB',
     firstFrame = 0,
     style = {}
   } = {}) {
     this.points = points
+    this.drawMode = drawMode
     this.fillMode = fillMode
     this.firstFrame = firstFrame
     this.style = style
@@ -31,7 +34,7 @@ export default class Line {
 
   render (context, {
     frame = Number.POSITIVE_INFINITY,
-    smoothed = true,
+    drawMode = this.drawMode,
     fillMode = this.fillMode,
     style = this.style
   } = {}) {
@@ -72,9 +75,23 @@ export default class Line {
     }
 
     // Slice the points before smoothing to ensure correct time sync
-    const points = smoothed
-      ? smooth(this.points.slice(bounds[0], bounds[1]))
-      : this.points.slice(bounds[0], bounds[1])
+    const points = (() => {
+      const points = this.points.slice(bounds[0], bounds[1])
+      if (!points || !points.length) return []
+
+      if (drawMode === 'smooth') return smooth(points)
+      if (drawMode === 'freehand') {
+        // Smooth only when no pressure data
+        const pts = points[0][2] !== undefined ? points : smooth(points)
+        return getStroke(pts, {
+          size: style.lineWidth * 1.5,
+          thinning: 0.5,
+          smoothing: 0.01,
+          streamline: 0.6
+        })
+      }
+      return points
+    })()
 
     // Draw line
     for (let index = 0; index < points.length; index++) {
@@ -83,13 +100,18 @@ export default class Line {
       context[index ? 'lineTo' : 'moveTo'](point[0], point[1])
     }
 
-    context.stroke()
+    if (drawMode === 'freehand') {
+      context.fillStyle = context.strokeStyle
+      context.fill()
+    } else context.stroke()
+
     context.restore()
   }
 
   toJSON () {
     return {
       points: this.points,
+      drawMode: this.drawMode,
       fillMode: this.fillMode,
       firstFrame: this.firstFrame,
       style: this.style

@@ -16,8 +16,8 @@ export default class App extends Component {
       <main class='app' store-data-view-mode={Store.app.viewMode}>
         <Toolbar />
         <div class='app__main'>
-          <Drawer store-disabled={d(Store.app.drawMode, m => m !== 'draw')} />
-          <Paster store-disabled={d(Store.app.drawMode, m => m !== 'paste')} />
+          <Drawer store-disabled={d(Store.app.inputMode, m => m !== 'draw')} />
+          <Paster store-disabled={d(Store.app.inputMode, m => m !== 'paste')} />
           <Renderer />
         </div>
         <Timeline />
