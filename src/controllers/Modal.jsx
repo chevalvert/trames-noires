@@ -2,6 +2,7 @@ import '/index.scss'
 import { render } from '/utils/jsx'
 import Modal from '/components/Modal'
 import Button from '/components/Button'
+import Input from '/components/Input'
 
 import IconCheck from 'iconoir/icons/check.svg?raw'
 import IconCancel from 'iconoir/icons/cancel.svg?raw'
@@ -16,6 +17,55 @@ export function bigText (message, props) {
 
 export function say (message, props) {
   render(<Modal {...props}>{message}</Modal>)
+}
+
+export async function prompt (message, {
+  title = 'Valeur demandée',
+  yes = 'Valider',
+  no = 'Annuler',
+  type = 'text',
+  value = undefined,
+  icon = null,
+  before = null,
+  after = null,
+  placeholder = null,
+  onCancel = () => null
+} = {}) {
+  return new Promise(resolve => {
+    const refs = {}
+
+    const y = async () => {
+      resolve(refs.input.state.value.get())
+      refs.modal.destroy()
+    }
+
+    const n = () => {
+      resolve()
+      refs.modal.destroy()
+    }
+
+    render((
+      <Modal
+        ref={el => { refs.modal = el }}
+        event-close={n}
+      >
+        <form event-submit={async (e) => { e.preventDefault(); y() }}>
+          <Input
+            autofocus
+            label={message}
+            ref={el => { refs.input = el }}
+            {...{ value, icon, placeholder, type, before, after }}
+          />
+        </form>
+        <footer>
+          <fieldset class='group'>
+            <Button event-click={n} icon={IconCancel} label={no} />
+            <Button event-click={y} icon={IconCheck} label={yes} type='submit' />
+          </fieldset>
+        </footer>
+      </Modal>
+    ))
+  })
 }
 
 export function confirm (message, {
@@ -81,6 +131,7 @@ export function error (error) {
 export default {
   bigText,
   say,
+  prompt,
   confirm,
   error
 }

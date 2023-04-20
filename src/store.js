@@ -62,7 +62,7 @@ const Store = {
 
   raf: {
     fps: r(60),
-    maxDuration: r(60 * 5),
+    maxDuration: w(60 * 5),
     isRunning: w(false),
     frameCount: w(0)
   },

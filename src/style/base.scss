@@ -40,14 +40,27 @@ fieldset {
 
     & > *:not(:last-child),
     & > *:not(:last-child) .button {
-      border-right: 0;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      border-right: 0 !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
     }
 
+    input + input,
+    input + .input,
+    input + .button,
+    input + .switcher .button,
+    .input + input,
+    .input + .input,
+    .input + .button,
+    .input + .switcher .button,
     .button + input,
-    .switcher + .switcher .button,
-    .button:not([hidden]) + .button {
+    .button + .input,
+    .button:not([hidden]) + .button,
+    .button + .switcher .button,
+    .switcher + input,
+    .switcher + .input,
+    .switcher + .button,
+    .switcher + .switcher .button {
       border-left-style: dashed;
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;

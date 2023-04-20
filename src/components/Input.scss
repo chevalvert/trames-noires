@@ -1,0 +1,36 @@
+.input {
+  display: flex;
+  padding: var(--gutter-internal);
+
+  align-items: center;
+
+  border: 1px solid;
+  border-radius: var(--round);
+
+  label {
+    margin-right: var(--gutter-internal);
+  }
+
+  label, &__before {
+    @include no-select;
+    white-space: nowrap;
+  }
+
+  input {
+    all: unset;
+    min-width: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  input:not(:valid) {
+    color: red;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button { appearance: none; }
+  input[type='number'] { appearance: textfield; }
+
+  &:has(&__before) input {
+    text-align: right;
+  }
+}
