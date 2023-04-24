@@ -1,6 +1,6 @@
 import { r, w, localStored } from '/utils/state'
 
-import Line from '/abstractions/Line'
+import Line from '/shared/Line'
 
 import IconFreehand from 'iconoir/icons/design-nib.svg?raw'
 import IconNoTime from 'iconoir/icons/timer-off.svg?raw'

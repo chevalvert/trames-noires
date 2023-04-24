@@ -1,0 +1,18 @@
+trames-noires-to-video
+
+trames-noires-to-video <UID>
+trames-noires-to-video <UID> --framerate=30
+trames-noires-to-video <UID> --width=1080 --height=1080
+trames-noires-to-video --help
+trames-noires-to-video --version
+
+Options
+  -h, --help       Show this screen
+  -v, --version    Print the current version
+
+  --framerate      Specify video framerate (default: 60)
+  --width          Specify video width (default: 1920)
+  --height         Specify video height (default: 1080)
+  --padding        Specify video padding (default: 0)
+
+  --keep           Do not delete the PNG sequence

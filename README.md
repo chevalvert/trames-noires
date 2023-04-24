@@ -16,11 +16,11 @@ $ npm run deploy:staging
 
 # Production
 $ npm run version
+
+# Render trames-noires drawing to video
+$ npm run render -- <UID>
+$ npm run render -- --help
 ```
-
-## Related
-
-[chevalvert/trames-noires-to-video](https://github.com/chevalvert/trames-noires-to-video)
 
 ## Credits
 

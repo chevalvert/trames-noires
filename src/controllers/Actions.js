@@ -1,7 +1,8 @@
 import { customAlphabet } from 'nanoid'
 
+import Line from '/shared/Line'
+
 import Store from '/store'
-import Line from '/abstractions/Line'
 import Api from '/controllers/Api'
 import Modal from '/controllers/Modal'
 import Raf from '/controllers/Raf'

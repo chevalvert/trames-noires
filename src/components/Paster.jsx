@@ -2,8 +2,9 @@ import './Paster.scss'
 import { Component } from '/utils/jsx'
 import { w } from '/utils/state'
 
+import Line from '/shared/Line'
+
 import Store from '/store'
-import Line from '/abstractions/Line'
 import Raf from '/controllers/Raf'
 import pointer from '/utils/pointer-position'
 import lastOf from '/utils/array-last'

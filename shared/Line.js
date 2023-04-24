@@ -1,7 +1,7 @@
 /* global Path2D */
 
-import { getStroke } from 'perfect-freehand'
-import smooth from 'chaikin-smooth'
+const PerfectFreehand = require('perfect-freehand')
+const smooth = require('chaikin-smooth')
 
 const AA_AB_FILL_MODE_LENGTH = 3
 
@@ -16,7 +16,7 @@ function pathData (points, { isStroke = false } = {}) {
     : ['M', points[0], 'L', points.slice(1)].join(' ')
 }
 
-export default class Line {
+class Line {
   constructor ({
     points = [],
     drawMode = 'raw', // raw|smooth|freehand
@@ -92,7 +92,7 @@ export default class Line {
 
       if (drawMode === 'smooth') return smooth(points)
       if (drawMode === 'freehand') {
-        return getStroke(points, {
+        return PerfectFreehand.getStroke(points, {
           ...style.perfectFreehand,
           simulatePressure: points[0][2] === undefined,
           last: points.length === this.points.length
@@ -129,3 +129,5 @@ export default class Line {
     }
   }
 }
+
+module.exports = Line

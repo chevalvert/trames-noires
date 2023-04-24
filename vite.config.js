@@ -1,5 +1,6 @@
 import path from 'path'
 import { defineConfig, loadEnv } from 'vite'
+import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 
 // If a backend is needed, see https://vitejs.dev/guide/backend-integration.html
 
@@ -10,16 +11,23 @@ export default defineConfig(({ mode }) => {
     root: path.join(__dirname, 'src'),
     publicDir: path.join(__dirname, 'public'),
     envDir: path.join(__dirname),
-    build: { outDir: path.join(__dirname, 'build') },
-
     base: env.BASE || '/',
+    build: {
+      outDir: path.join(__dirname, 'build'),
+      commonjsOptions: { include: [/shared/, /node_modules/] }
+    },
 
     define: {
       __NAME__: JSON.stringify(process.env.npm_package_name),
       __VERSION__: JSON.stringify(process.env.npm_package_version)
     },
 
+    resolve: {
+      alias: { '/shared': path.join(__dirname, 'shared') }
+    },
+
     plugins: [
+      viteCommonjs(),
       { // Replace index.jsx by test/test.jsx as entry in test mode
         name: 'html-inject-test',
         transformIndexHtml: html => mode === 'test' ? html.replace('/index.jsx', '/test/test.jsx') : html,

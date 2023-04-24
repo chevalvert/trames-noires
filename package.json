@@ -9,7 +9,8 @@
     "test": "vite --mode test",
     "deploy": "vite build && ghp build --a .github -f -b production -m 'Deploy to production'",
     "deploy:staging": "vite build --mode staging && ghp build -a .github -f -b staging -m 'Deploy to staging'",
-    "postversion": "git push && git push --tags && npm run deploy"
+    "postversion": "git push && git push --tags && npm run deploy",
+    "render": "node bin/index.js"
   },
   "author": "Arnaud Juracek",
   "license": "MIT",
@@ -18,6 +19,7 @@
     "url": "git+https://github.com/chevalvert/trames-noires.git"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-config-standard-jsx": "^11.0.0",
@@ -35,12 +37,17 @@
   },
   "dependencies": {
     "@internet/raf": "^0.2.1",
+    "canvas": "^2.11.2",
     "chaikin-smooth": "^1.0.4",
     "classnames": "^2.3.2",
     "debounce": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "ffmpeg-static": "^5.1.0",
     "hotkeys-js": "^3.10.1",
     "iconoir": "^6.5.0",
+    "minimist": "^1.2.8",
     "nanoid": "^4.0.2",
+    "node-fetch": "2",
     "perfect-freehand": "^1.2.0"
   }
 }
