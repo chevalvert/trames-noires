@@ -16,19 +16,36 @@ function pathData (points, { isStroke = false } = {}) {
     : ['M', points[0], 'L', points.slice(1)].join(' ')
 }
 
+let ID = Date.now()
+
 class Line {
   constructor ({
+    offset = [0, 0],
     points = [],
     drawMode = 'raw', // raw|smooth|freehand
     fillMode = 'AA→AB',
     firstFrame = 0,
-    style = {}
+    style = {},
+
+    id = ++ID,
+    ref
   } = {}) {
+    this.offset = offset
     this.points = points
     this.drawMode = drawMode
     this.fillMode = fillMode
     this.firstFrame = firstFrame
     this.style = style
+
+    this.id = id
+    this.ref = ref
+  }
+
+  clone (options) {
+    const clone = new Line(options)
+    clone.ref = this.ref || this.id
+    clone.points = this.points.slice(0)
+    return clone
   }
 
   get isEmpty () {
@@ -36,7 +53,12 @@ class Line {
   }
 
   get pathData () {
-    if (!this._pathData) this._pathData = pathData(this.points)
+    if (!this._pathData) {
+      this._pathData = pathData(this.points.map(([x, y]) => ([
+        x + this.offset[0],
+        y + this.offset[1]
+      ])))
+    }
     return this._pathData
   }
 
@@ -111,7 +133,7 @@ class Line {
       for (let index = 0; index < points.length; index++) {
         const point = points[index]
         if (!point) continue
-        context[index ? 'lineTo' : 'moveTo'](point[0], point[1])
+        context[index ? 'lineTo' : 'moveTo'](point[0] + this.offset[0], point[1] + this.offset[1])
       }
       context.stroke()
     }
@@ -121,7 +143,10 @@ class Line {
 
   toJSON () {
     return {
-      points: this.points,
+      id: this.id,
+      ref: this.ref,
+      offset: this.offset,
+      points: this.ref ? null : this.points,
       drawMode: this.drawMode,
       fillMode: this.fillMode,
       firstFrame: this.firstFrame,

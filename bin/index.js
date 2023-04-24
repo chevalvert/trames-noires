@@ -67,11 +67,21 @@ const cwd = path.join(process.cwd(), UID)
   }
 })()
 
-async function renderFrames (lines, cwd) {
+async function renderFrames (json, cwd) {
   const canvas = createCanvas(width, height)
   const context = canvas.getContext('2d')
 
-  // Calcul center
+  // Decode json
+  const lines = json.map((line, index, lines) => {
+    if (line.ref) {
+      const ref = lines.find(l => l.id === line.ref)
+      line.points = ref.points
+    }
+
+    return new Line(line)
+  })
+
+  // Compute center
   const bbox = boundingBox(lines)
   const scale = contain(bbox, [width, height, padding])
 
@@ -88,9 +98,7 @@ async function renderFrames (lines, cwd) {
       -bbox.ymin + ((height / scale) - bbox.height) / 2
     )
 
-    for (const opts of lines) {
-      ;(new Line(opts)).render(context, { frame })
-    }
+    for (const line of lines) line.render(context, { frame })
     context.restore()
 
     canvas.createPNGStream().pipe(output)

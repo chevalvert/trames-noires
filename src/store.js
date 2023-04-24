@@ -63,7 +63,14 @@ const Store = {
 
     lines: localStored('app.lines', [], {
       encode: lines => JSON.stringify(lines.map(line => line.toJSON())),
-      decode: lines => JSON.parse(lines || '[]').map(line => new Line(line))
+      decode: lines => JSON.parse(lines || '[]').map((line, index, lines) => {
+        if (line.ref) {
+          const ref = lines.find(l => l.id === line.ref)
+          line.points = ref.points
+        }
+
+        return new Line(line)
+      })
     }),
 
     style: w({

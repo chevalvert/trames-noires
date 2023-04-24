@@ -1,16 +1,19 @@
-// Compute the bounding box of an array of polylines
-module.exports = function (polylines) {
+// Compute the bounding box of an array of Line
+module.exports = function (lines) {
   let xmin = Number.POSITIVE_INFINITY
   let ymin = Number.POSITIVE_INFINITY
   let xmax = Number.NEGATIVE_INFINITY
   let ymax = Number.NEGATIVE_INFINITY
 
-  for (const polyline of polylines) {
-    for (const point of polyline.points) {
-      if (point[0] < xmin) xmin = point[0]
-      if (point[1] < ymin) ymin = point[1]
-      if (point[0] > xmax) xmax = point[0]
-      if (point[1] > ymax) ymax = point[1]
+  for (const line of lines) {
+    for (const point of line.points) {
+      const x = point[0] + (line.offset[0] || 0)
+      const y = point[1] + (line.offset[1] || 0)
+
+      if (x < xmin) xmin = x
+      if (y < ymin) ymin = y
+      if (x > xmax) xmax = x
+      if (y > ymax) ymax = y
     }
   }
 
