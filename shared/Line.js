@@ -41,6 +41,15 @@ class Line {
     this.ref = ref
   }
 
+  static build (options, index, lines) {
+    if (options.ref && lines) {
+      const ref = lines.find(l => l.id === options.ref)
+      options.points = ref.points
+    }
+
+    return new Line(options)
+  }
+
   clone (options) {
     const clone = new Line(options)
     clone.ref = this.ref || this.id

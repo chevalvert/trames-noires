@@ -36,7 +36,7 @@ export async function load (uid) {
   if (!Store.api.version.get()) await new Promise(resolve => Store.api.version.subscribeOnce(resolve))
   try {
     const lines = await Api.import(uid)
-    Store.app.lines.set(lines.map(line => new Line(line)))
+    Store.app.lines.set(lines.map(Line.build))
     Raf.start()
   } catch (error) {
     if (error.status && error.status === 404) Modal.say('Impossible de trouver l’animation demandée', { title: 'Erreur' })

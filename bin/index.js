@@ -72,14 +72,7 @@ async function renderFrames (json, cwd) {
   const context = canvas.getContext('2d')
 
   // Decode json
-  const lines = json.map((line, index, lines) => {
-    if (line.ref) {
-      const ref = lines.find(l => l.id === line.ref)
-      line.points = ref.points
-    }
-
-    return new Line(line)
-  })
+  const lines = json.map(Line.build)
 
   // Compute center
   const bbox = boundingBox(lines)
