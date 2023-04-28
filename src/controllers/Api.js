@@ -52,6 +52,9 @@ export default {
   export: async (object, uid) => {
     const response = await fetch(api(uid ? 'json?uid=' + uid : 'json'), {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(object)
     })
 
