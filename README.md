@@ -4,6 +4,32 @@
 
 ## Usage
 
+### Hotkeys
+
+- <kbd>space</kbd>: Play/pause
+- <kbd>←/→</kbd>: Step 1 frame backward/forward
+- <kbd>shift + ←/→</kbd>: Step 1 frame backward/forward
+- <kbd>cmd + z</kbd>: Undo last line
+- <kbd>cmd + x</kbd>: Clear all
+- <kbd>w</kbd>: Toggle wireframe
+- <kbd>tab</kbd>: Toggle UI
+
+### Pro mode
+
+For advanced usage, activate pro mode by appending `?pro` to the interface.
+
+### Render video using CLI
+
+Once this repostiroy cloned and installed:
+
+```bash
+# Render trames-noires drawing to video
+$ npm run render -- <UID>
+$ npm run render -- --help
+```
+
+## Development
+
 ```bash
 # Development
 $ npm run start
@@ -16,10 +42,6 @@ $ npm run deploy:staging
 
 # Production
 $ npm run version
-
-# Render trames-noires drawing to video
-$ npm run render -- <UID>
-$ npm run render -- --help
 ```
 
 ## Credits
