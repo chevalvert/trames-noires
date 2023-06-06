@@ -1,4 +1,6 @@
+/* global Blob */
 import { customAlphabet } from 'nanoid'
+import FileSaver from 'file-saver'
 
 import Line from '/shared/Line'
 
@@ -21,6 +23,8 @@ export function undo () {
 }
 
 export async function save () {
+  // TODO[duration] save duration
+  // TODO allow saving as a JSON file
   const lines = Store.app.lines.current.map(line => line.toJSON())
   try {
     const { uid } = await Api.export(lines, nanoid())
@@ -35,6 +39,7 @@ export async function save () {
 export async function load (uid) {
   if (!Store.api.version.get()) await new Promise(resolve => Store.api.version.subscribeOnce(resolve))
   try {
+    // TODO[duration] use saved duration
     const lines = await Api.import(uid)
     Store.app.lines.set(lines.map(Line.build))
     Raf.start()
@@ -44,9 +49,17 @@ export async function load (uid) {
   }
 }
 
+export async function download () {
+  const lines = Store.app.lines.current.map(line => line.toJSON())
+
+  const string = JSON.stringify(lines, null, 2)
+  return FileSaver.saveAs(new Blob([string], { mimetype: 'application/json' }), Date.now() + '.json')
+}
+
 export default {
   clear,
   undo,
   save,
-  load
+  load,
+  download
 }

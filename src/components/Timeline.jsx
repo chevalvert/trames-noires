@@ -10,6 +10,7 @@ import Actions from '/controllers/Actions'
 import Raf from '/controllers/Raf'
 
 import IconExport from 'iconoir/icons/save-floppy-disk.svg?raw'
+import IconDownload from 'iconoir/icons/page.svg?raw'
 import IconPlay from 'iconoir/icons/play.svg?raw'
 import IconPause from 'iconoir/icons/pause.svg?raw'
 
@@ -65,12 +66,22 @@ export default class Timeline extends Component {
           ]}
         </fieldset>
 
-        <Button
-          icon={IconExport}
-          event-click={Actions.save}
-          store-hidden={not(Store.api.version)}
-          store-disabled={d(Store.app.lines, lines => !lines.length)}
-        />
+        <fieldset class='group'>
+          <Button
+            icon={IconDownload}
+            event-click={Actions.download}
+            store-hidden={not(Store.app.proMode)}
+            store-disabled={d(Store.app.lines, lines => !lines.length)}
+          />
+
+          <Button
+            icon={IconExport}
+            event-click={Actions.save}
+            store-disabled={d([Store.api.version, Store.app.lines], () => {
+              return !(Store.app.lines.current.length && Store.api.version.current)
+            })}
+          />
+        </fieldset>
       </section>
     )
   }

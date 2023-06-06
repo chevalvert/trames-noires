@@ -3,7 +3,7 @@
   display: flex;
   gap: var(--gutter);
 
-  fieldset {
+  fieldset:has(input[type='range']) {
     flex: 1;
   }
 
