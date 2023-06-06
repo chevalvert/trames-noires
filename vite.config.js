@@ -36,6 +36,11 @@ export default defineConfig(({ mode }) => {
             alias: { '/test': path.join(__dirname, 'test') }
           }
         })
+      },
+      { // Replace %SEMVER% in HTML
+        name: 'html-inject-version',
+        transformIndexHtml: html =>
+          html.replace('%SEMVER%', process.env.npm_package_version + (mode !== 'production' ? `@${mode}` : ''))
       }
     ],
 
