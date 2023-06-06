@@ -15,10 +15,11 @@ const boundingBox = require('./geom/bounding-box')
 const contain = require('./geom/contain')
 
 const argv = require('minimist')(process.argv.slice(2), {
-  string: ['framerate', 'width', 'height', 'output'],
+  string: ['duration', 'framerate', 'width', 'height', 'output'],
   boolean: ['help', 'version'],
   alias: { help: 'h', version: 'v', output: 'o' },
   default: {
+    duration: 60 * 5,
     framerate: 60,
     width: 1920,
     height: 1080,
@@ -41,7 +42,7 @@ if (argv.help || !UID) {
 const width = +argv.width
 const height = +argv.height
 const padding = +argv.padding
-const duration = 60 * 5 // TODO embed in json animations
+const duration = +argv.duration // TODO default to duration in embed in json animations
 
 const tmp = dirSync({ unsafeCleanup: true })
 const output = argv.output

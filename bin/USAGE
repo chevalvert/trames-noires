@@ -14,6 +14,7 @@ Options
 
   -o, --output     Specify the path for the rendered video
 
+  --duration       Specify video duration (default: 300)
   --framerate      Specify video framerate (default: 60)
   --width          Specify video width (default: 1920)
   --height         Specify video height (default: 1080)
