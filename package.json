@@ -48,6 +48,7 @@
     "minimist": "^1.2.8",
     "nanoid": "^4.0.2",
     "node-fetch": "2",
-    "perfect-freehand": "^1.2.0"
+    "perfect-freehand": "^1.2.0",
+    "tmp": "^0.2.1"
   }
 }
