@@ -123,7 +123,7 @@ class Line {
 
       if (drawMode === 'smooth') return smooth(points)
       if (drawMode === 'freehand') {
-        return PerfectFreehand.getStroke(points, {
+        return (PerfectFreehand.getStroke || PerfectFreehand)(points, {
           ...style.perfectFreehand,
           simulatePressure: points[0][2] === undefined,
           last: points.length === this.points.length
@@ -136,7 +136,10 @@ class Line {
     // Draw line
     if (drawMode === 'freehand' && points.length > 1) {
       context.fillStyle = context.strokeStyle
-      context.fill(new Path2D(pathData(points, { isStroke: true })))
+      context.fill(new Path2D(pathData(points.map(([x, y]) => ([
+        x + this.offset[0],
+        y + this.offset[1]
+      ])), { isStroke: true, offset: this.offset })))
     } else {
       context.beginPath()
       for (let index = 0; index < points.length; index++) {

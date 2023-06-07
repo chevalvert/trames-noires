@@ -6,13 +6,17 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
 const fs = require('fs-extra')
 const fetch = require('node-fetch')
 const { dirSync } = require('tmp')
-const { createCanvas } = require('canvas')
+const { polyfillPath2D } = require('path2d-polyfill')
+const { createCanvas, CanvasRenderingContext2D } = require('canvas')
 const { spawn } = require('node:child_process')
 const ffmpegBin = require('ffmpeg-static')
 
 const Line = require('../shared/Line')
 const boundingBox = require('./geom/bounding-box')
 const contain = require('./geom/contain')
+
+global.CanvasRenderingContext2D = CanvasRenderingContext2D
+polyfillPath2D(global)
 
 const argv = require('minimist')(process.argv.slice(2), {
   string: ['duration', 'framerate', 'width', 'height', 'output'],
